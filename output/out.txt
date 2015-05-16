@@ -1,0 +1,35 @@
+void function0 ()
+{
+
+	return;
+}
+
+void fibonacci ()
+{
+
+	return;
+}
+
+void function2 (int n)
+{
+
+	return;
+}
+
+int fibonacci ()
+{
+
+	return;
+}
+
+int fibonacci ()
+{
+
+	return;
+}
+
+void main()
+{
+
+	return;
+}

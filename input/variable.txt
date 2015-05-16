@@ -1,0 +1,19 @@
+Create a variable
+Create an integer variable
+Create a float variable
+Create a character variable
+Create a double variable
+Create an integer variable named X
+Create a float variable named X
+Create a double variable named X
+Create a character variable named X
+Create an integer variable with a value of 2
+Create a float variable with a value of 2
+Create a double variable with a value of 2
+Create a character variable with a value of 2
+Create an integer variable named X with a value of 2
+Create a float variable named X with a value of 2
+Create a double variable named X with a value of 2
+Create a character variable named X with a value of 2
+Create a variable named X with a value of 2
+Create a variable with a value of 2
