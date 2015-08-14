@@ -28,5 +28,8 @@ public class GrammarRelation {
 		return false;
 	}
 	
+	public String toString() {
+		return word1 + " with " + word2 + " has relation " + relation;
+	}
 	
 }

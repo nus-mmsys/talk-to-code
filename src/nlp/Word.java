@@ -16,4 +16,8 @@ public class Word {
 		gramClass = g;
 	}
 	
+	public String toString() {
+		return word + "(" + gramClass + ")";
+	}
+	
 }

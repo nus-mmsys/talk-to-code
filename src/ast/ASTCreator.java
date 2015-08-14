@@ -18,7 +18,7 @@ public class ASTCreator {
 	private ArrayList<String> variableTypeList;
 	private ArrayList<String> createList;
 	private ArrayList<String> varTypeList;
-	
+	private ArrayList<ASTCustomFunction> functionList;
 	
 	public ASTCreator()
 	{
@@ -34,6 +34,7 @@ public class ASTCreator {
 		var_suffix = 0;
 		variableList = new ArrayList<String>();
 		variableTypeList = new ArrayList<String>();
+		functionList = new ArrayList<ASTCustomFunction>();
 		createList = new ArrayList<String>();
 		createList.add("loop");
 		createList.add("variable");
@@ -48,7 +49,6 @@ public class ASTCreator {
 		varTypeList.add("String");
 		varTypeList.add("Double");
 		varTypeList.add("float");
-
 	}
 	
 	
@@ -69,7 +69,7 @@ public class ASTCreator {
 		int num_cmds = sents.size();
 		for(int i=0; i<num_cmds; i++)
 		{
-			consoleLogger.log("Sentence is: " + sents.get(i).print());
+			consoleLogger.log("[Sentence]\t" + sents.get(i).print());
 			modifyNode(sents.get(i), root);
 			rectifyNodes(root);
 		}
@@ -77,7 +77,12 @@ public class ASTCreator {
 	
 	public String print()
 	{
-		return root.print();
+		String res = "";
+		for (ASTCustomFunction n : functionList) {
+			res += n.print()+'\n';
+		}
+		res += root.print();
+		return res;
 	}
 	
 	//
@@ -119,12 +124,72 @@ public class ASTCreator {
 				return createVariable(s);
 			else if(s.find("variable"))
 				return createVariable(s);
+			else if (r.equalsIgnoreCase("function") || existsInFuncList(r) || s.find("function")) {
+				return createFunction(s);
+			}
 			else
 				consoleLogger.log("Could not find what to create, returning null");
 		}
 		return null;
 				
 	}
+	
+	public ASTNode createFunction(Sentence s) {
+		ASTCustomFunction func = new ASTCustomFunction(root); // TODO Need to do non-root function definition
+		String funcName = findFunctionName(s);
+		String params = findFunctionParams(s); // TODO Support multiple inputs
+		String retType = findFunctionReturnType(s); // TODO Add return types
+
+		consoleLogger.log("Relations ");
+		for (GrammarRelation rel : s.relations) {
+			consoleLogger.log(rel.toString());
+		}
+
+		if (funcName == null) {
+			consoleLogger.log("No function name found");
+			funcName = "function"+functionList.size();
+		}
+
+		func.functionName = funcName;
+
+		if (params != null) 
+			func.functionParameters.add(params);
+		else
+			consoleLogger.log("No function parameters found");
+		
+		if (retType != null)
+			func.retType = retType;
+		
+		functionList.add(func);
+		return null; // TODO temp fix to avoid getting collected by rectify and modify
+	}
+	
+	private String findFunctionName(Sentence s) {
+		String r = s.findWord2InRelation("called", "dobj");
+		return r;
+	}
+
+	private String findFunctionParams(Sentence s) {
+		String r = s.findWord2InRelation("create", "nmod:with");
+		if (existsInVarTypeList(r))
+			return r;
+
+		if (r != null) {
+			String t = s.findWord2InRelation(r, "compound");
+			return t + " " + r;
+		}
+			
+		return null;
+	}
+
+	private String findFunctionReturnType(Sentence s) {
+		ArrayList<String> params = new ArrayList<String>();
+		String r = s.findWord2InRelation("returns", "dobj");
+		if (existsInVarTypeList(r))
+			return r;
+		return null;
+	}
+	
 	
 	public ASTNode createVariable(Sentence s)
 	{
@@ -202,6 +267,7 @@ public class ASTCreator {
 	
 	public boolean existsInVarTypeList(String w)
 	{
+		if (w == null) return false;
 		for(String s:varTypeList)
 		{
 			if(s.toLowerCase().equals(w.toLowerCase()))
@@ -209,6 +275,15 @@ public class ASTCreator {
 		}
 		return false;
 	}	
+	
+	public boolean existsInFuncList(String w) {
+		for (ASTCustomFunction n : functionList) {
+			if (n.functionName.equalsIgnoreCase(w)) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	public String findVariableName(Sentence s)
 	{

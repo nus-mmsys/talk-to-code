@@ -1,6 +1,7 @@
 package io;
 
 import java.io.BufferedReader;
+import utils.Constants;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -17,16 +18,16 @@ public class InputOutput{
 	public static void main(String[] args) throws IOException
 	{
 		ConsoleLogger cL = new ConsoleLogger();
-		ATD atd = new ATD("C:/Users/User/Documents/FYP/Supported Clauses.txt", cL);
+		ATD atd = new ATD(Constants.SUPPORTED_CLAUSES, cL);
 		if(atd!=null)
 		{
-			ArrayList<String> textInput = getTextInput("C:/Users/User/Documents/input.txt");
+			ArrayList<String> textInput = getTextInput(Constants.INPUTFILE);
 			Parser p = new StanfordParser();
 			ASTCreator ast = new ASTCreator(cL);
 			ast.constructAST(p.getSentences(textInput));
 			String output = ast.print();
 			System.out.println(output);
-			writeToFile("C:/Users/User/Documents/output.txt", output);
+			writeToFile(Constants.OUTPUTFILE, output);
 			cL.writeToFile();
 		}
 		else

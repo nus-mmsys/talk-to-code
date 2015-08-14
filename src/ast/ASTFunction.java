@@ -22,8 +22,9 @@ public class ASTFunction extends ASTNode{
 			if(i!=functionParameters.size()-1)
 				ret=ret.concat(functionParameters.get(i).trim()+", ");
 			else
-				ret=ret.concat(functionParameters.get(i)+");\n");
+				ret=ret.concat(functionParameters.get(i).trim());
 		}
+		ret=ret.concat(");\n");
 		return ret;
 	}
 	

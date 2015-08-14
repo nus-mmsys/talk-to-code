@@ -1,6 +1,7 @@
 package io;
 
 import java.io.BufferedReader;
+import utils.Constants;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -69,7 +70,7 @@ public class ATD {
 				String output = ast.print();
 				output = output.concat("\n\nLog\n");
 				output = output.concat(cL.getLog());
-				writeToFile("C://Users//User//Documents//FYP//FYPTest//output"+_caseCtr+".txt", output);
+				writeToFile(Constants.OUTPUTFILE_CASE+_caseCtr+".txt", output);
 			}
 			_caseCtr++;
 			cL.clear();

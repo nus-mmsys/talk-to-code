@@ -39,9 +39,9 @@ public class ASTMainBody extends ASTNode {
 		String retString = retType+" main()"+"\n"+"{\n";
 		for(int i = 0; i<children.size(); i++)
 		{
-			retString = retString.concat((children.get(i)).print());
+			retString = retString.concat("\t"+(children.get(i)).print());
 		}
-		return retString.concat("\nreturn;\n}");
+		return retString.concat("\n\treturn;\n}");
 	}
 
 }

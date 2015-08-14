@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import utils.Constants;
 
 public class ConsoleLogger {
 	ArrayList<String> consoleLog;
@@ -37,7 +38,7 @@ public class ConsoleLogger {
 	
 	public void writeToLog() throws IOException
 	{
-		FileWriter write = new FileWriter("C:/Users/User/Documents/log.txt", false);
+		FileWriter write = new FileWriter(Constants.LOGFILE, false);
 		PrintWriter print_line = new PrintWriter(write);
 		for(int i = 0; i<consoleLog.size();i++)
 		{
@@ -48,7 +49,7 @@ public class ConsoleLogger {
 	
 	public void writeToFile() throws IOException
 	{
-		FileWriter write = new FileWriter("C:/Users/User/Documents/log.txt", false);
+		FileWriter write = new FileWriter(Constants.LOGFILE, false);
 		PrintWriter print_line = new PrintWriter(write);
 		String text = "";
 		for(String a:consoleLog)
