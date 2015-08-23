@@ -69,7 +69,7 @@ public class ASTCreator {
 		int num_cmds = sents.size();
 		for(int i=0; i<num_cmds; i++)
 		{
-			consoleLogger.log("[Sentence]\t" + sents.get(i).print());
+			consoleLogger.log("[Sentence]\t" + sents.get(i).print()+"\n");
 			modifyNode(sents.get(i), root);
 			rectifyNodes(root);
 		}
@@ -105,9 +105,15 @@ public class ASTCreator {
 		}
 		else if(w.word.toLowerCase().equals("if"))
 		{
-			ASTNode a = findCondition(s, r);
-			if(a!=null)
-				r.addChild(a);
+			//ASTNode a = findCondition(s, r);
+			//if(a!=null)
+			//	r.addChild(a);
+		}
+		//Maybe for expression
+		else {
+			for (GrammarRelation rel : s.relations) {
+				consoleLogger.log(rel.toString()+"\n");
+			}
 		}
 		return;
 	}
@@ -142,7 +148,7 @@ public class ASTCreator {
 
 		consoleLogger.log("Relations ");
 		for (GrammarRelation rel : s.relations) {
-			consoleLogger.log(rel.toString());
+			consoleLogger.log(rel.toString()+"\n");
 		}
 
 		if (funcName == null) {
@@ -321,21 +327,21 @@ public class ASTCreator {
 	//Start:Condition Functions
 	//
 	
-	public ASTIfNode findCondition(Sentence s, ASTNode parent)
+/*	public ASTIfNode findCondition(Sentence s, ASTNode parent)
 	{
 		consoleLogger.log("Value 1 is "+s.words.get(1).word);
-		ASTIfNode ifNode = new ASTIfNode(parent);
-		ASTConditionNode c = new ASTConditionNode(ifNode);
-		c.value1 = s.words.get(1).word;
-		c.value2 = findSecondValue(s, c.value1);
-		c.operand = findConditionalValue(s);
-		ifNode.conditions.add(c);
+		//ASTIfNode ifNode = new ASTIfNode(parent);
+		//ASTConditionNode c = new ASTConditionNode(ifNode);
+		//c.value1 = s.words.get(1).word;
+		//c.value2 = findSecondValue(s, c.value1);
+		//c.operand = findConditionalValue(s);
+		//ifNode.conditions.add(c);
 		
 		if(s.find("print"))
 		{
 			consoleLogger.log("Print function call detected");
-			ASTFunction af = new ASTFunction(ifNode);
-			af.functionName = "printf";
+			//ASTFunction af = new ASTFunction(ifNode);
+			//af.functionName = "printf";
 			String r = s.findWord2InRelation("print", "appos");
 			if(r==null)
 			{
@@ -343,7 +349,7 @@ public class ASTCreator {
 				if(r==null)
 				{					
 					consoleLogger.log("Unclear what to print, returning");
-					return ifNode;
+				//	return ifNode;
 				}
 			}
 
@@ -367,7 +373,7 @@ public class ASTCreator {
 			ifNode.addChild(af);
 		}
 		return ifNode;
-	}
+	}*/
 	
 	public String findSecondValue(Sentence s, String v)
 	{

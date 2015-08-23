@@ -24,6 +24,9 @@ public class InputOutput{
 			ArrayList<String> textInput = getTextInput(Constants.INPUTFILE);
 			Parser p = new StanfordParser();
 			ASTCreator ast = new ASTCreator(cL);
+			//for(int i = 0; i<p.getSentences(textInput).size();i++){
+			//	cL.log(p.getSentences(textInput).get(i).toString());
+			//}
 			ast.constructAST(p.getSentences(textInput));
 			String output = ast.print();
 			System.out.println(output);

@@ -3,6 +3,7 @@ package ast;
 import java.util.ArrayList;
 
 public class ASTNode {
+	private static final String type = "ASTNode";
 	ASTNode parent;
 	ArrayList<ASTNode> children;
 	ASTNode nextSibling;
@@ -36,12 +37,14 @@ public class ASTNode {
 		children.remove(0);
 		return a;
 	}
-	
+	//need to change
 	public String print()
 	{
 		return "Hi, I am an ASTNode";
 	}
-	
+	public String typeof(){
+		return type;
+	}
 	int getActiveChild()
 	{
 		return activeChild;
