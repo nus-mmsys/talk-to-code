@@ -2,7 +2,6 @@ package ast;
 
 public class ASTExpressionUnitIdentifier extends ASTExpressionUnit{
 	private static final String NODE_TYPE = "Identifier";
-	private static final String VALUE_UNDECLARED = "\0";
 	private static final String VISIBLE_PUBLIC = "public";
 	private static final String VISIBLE_PROTECTED = "protected";
 	private static final String VISIBLE_PRIVATE = "private";
@@ -17,39 +16,33 @@ public class ASTExpressionUnitIdentifier extends ASTExpressionUnit{
 		super(a);
 	}
 	public ASTExpressionUnitIdentifier(String name,String type){
-		super(name,type,VALUE_UNDECLARED);
+		super(name,type);
 		this.visibleType = VISIBLE_PUBLIC;
 		this.isStatic = false;
 		this.isDeclaration = false;
 		this.isAttribute = false;
 	}
-	public ASTExpressionUnitIdentifier(String name,String type,String value){
-		this(name,type);
-		this.value = value;
-	}
+
 	public ASTExpressionUnitIdentifier(String name,String type,boolean isDeclaration){
 		this(name,type);
 		this.isDeclaration = isDeclaration;
 	}
-	public ASTExpressionUnitIdentifier(String name,String type,String value,boolean isDeclaration){
-		this(name,type,value);
-		this.isDeclaration = isDeclaration;
-	}
+
 	public ASTExpressionUnitIdentifier(String name,String type,boolean isDeclaration,String visibleType){
 		this(name,type,isDeclaration);
 		this.visibleType = visibleType;
 	}
-	public ASTExpressionUnitIdentifier(String name,String type,String value,String visibleType,boolean isDeclaration){
-		this(name,type,value,isDeclaration);
+	public ASTExpressionUnitIdentifier(String name,String type,String visibleType,boolean isDeclaration){
+		this(name,type,isDeclaration);
 		this.visibleType =visibleType;
 	}
 	public ASTExpressionUnitIdentifier(String name,String type,String visibleType,boolean isStatic,boolean isDeclaration){
-		this(name,type,VALUE_UNDECLARED,visibleType,isDeclaration);
+		this(name,type,visibleType,isDeclaration);
 		this.isStatic = isStatic;
 		
 	}
 	public ASTExpressionUnitIdentifier(String name,String type,String value,String visibleType,boolean isStatic,boolean isDeclaration){
-		this(name,type,value,visibleType,isDeclaration);
+		this(name,type,visibleType,isDeclaration);
 		this.isStatic = isStatic;
 	}
 	public ASTExpressionUnitIdentifier(String name,String type,String value,String visibleType,boolean isStatic,boolean isDeclaration,boolean isAttribute){
@@ -66,7 +59,7 @@ public class ASTExpressionUnitIdentifier extends ASTExpressionUnit{
 	
 	public ASTExpressionUnitIdentifier(ASTExpressionUnitIdentifier a){
 		
-		super(new ASTExpression(a.result,a.isEnd,a.isQuoted),a.name,a.type,a.value,a.unitClass);
+		super(new ASTExpression(a.result,a.isEnd,a.isQuoted),a.name,a.type,a.value);
 		this.visibleType = a.visibleType;
 		this.isStatic = a.isStatic;
 		this.isDeclaration = a.isDeclaration;
@@ -94,6 +87,11 @@ public class ASTExpressionUnitIdentifier extends ASTExpressionUnit{
 		this.result = super.print();
 		return this.result;
 	}
+	public void setVisibility(String visibility){
+		//switch(visibility)
+		
+	}
+	
 	public String getVisibility() {
 		return this.visibleType;
 	}

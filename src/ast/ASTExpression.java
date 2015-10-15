@@ -4,8 +4,8 @@ public class ASTExpression extends ASTNode {
 	private static final String NODE_TYPE = "Expression";
 	
 	protected String result;
-	protected boolean isEnd;
-	protected boolean isQuoted;
+	protected boolean isEnd = false;
+	protected boolean isQuoted = false;
 	
 	public ASTExpression(ASTNode a) {
 		super(a);
@@ -27,7 +27,7 @@ public class ASTExpression extends ASTNode {
 	public ASTExpression(boolean isQuote){
 		super();
 		this.isQuoted = isQuote;
-		this.isEnd = true; //Default Singular Expression
+		this.isEnd = false; //Default Singular Expression
 		this.result = "";
 		
 	}

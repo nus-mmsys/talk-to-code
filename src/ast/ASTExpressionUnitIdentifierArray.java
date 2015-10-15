@@ -7,7 +7,7 @@ public class ASTExpressionUnitIdentifierArray extends ASTExpressionUnitIdentifie
 	private static final String VISIBLE_PUBLIC = "public";
 	private static final String VISIBLE_PROTECTED = "protected";
 	private static final String VISIBLE_PRIVATE = "private";
-	private ArrayList<ASTExpression> indexes = new ArrayList<ASTExpression>();
+	//private ArrayList<ASTExpression> indexes = new ArrayList<ASTExpression>();
 	private int dimension;
 	public ASTExpressionUnitIdentifierArray() {
 		super();
@@ -17,15 +17,17 @@ public class ASTExpressionUnitIdentifierArray extends ASTExpressionUnitIdentifie
 		super(a);
 		this.dimension = 0;
 	}
-	public ASTExpressionUnitIdentifierArray(ASTExpressionUnitIdentifier a,ArrayList<ASTExpression> indexes){
+	public ASTExpressionUnitIdentifierArray(ASTExpressionUnitIdentifier a,int dimension){
 		super(a);
-		this.indexes = indexes;
-		this.dimension = this.indexes.size();
+		this.dimension = dimension;
+		//this.indexes = indexes;
+		//this.dimension = this.indexes.size();
 	}
-	public ASTExpressionUnitIdentifierArray(ASTExpressionUnitIdentifier a, ASTExpression index){
+	public ASTExpressionUnitIdentifierArray(ASTExpressionUnitIdentifier a){
 		super(a);
-		this.indexes.add(index);
-		this.dimension = this.indexes.size();
+		this.dimension = 1;
+		//this.indexes.add(index);
+		//this.dimension = this.indexes.size();
 	}
 	public String print() {
 		String result = "";
@@ -36,7 +38,7 @@ public class ASTExpressionUnitIdentifierArray extends ASTExpressionUnitIdentifie
 					result = componentAdd(result,"static");
 				}
 			}
-			result = componentAdd(result,this.getType());
+			result += this.getType();
 			for(int dimensionCount = 1; dimensionCount<=this.dimension;dimensionCount++){
 				result+="[]";
 			}
@@ -44,9 +46,9 @@ public class ASTExpressionUnitIdentifierArray extends ASTExpressionUnitIdentifie
 		}
 		else {
 			result += this.getName();
-			for(int dimensionCount = 0;dimensionCount<this.dimension;dimensionCount++){
+			/*for(int dimensionCount = 0;dimensionCount<this.dimension;dimensionCount++){
 				result = indexAddition(result,this.indexes.get(dimensionCount).print());
-			}
+			}*/
 		}
 		this.result = result;
 		if(this.isQuoted) {
