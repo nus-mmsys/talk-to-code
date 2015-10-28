@@ -1,8 +1,8 @@
 /**
  * JavaCC template file created by SF JavaCC plugin 1.5.28+ wizard for JavaCC 1.5.0+
  */options{  static = true;}PARSER_BEGIN(ASTParser)package ast;
-
-public class ASTParser{  public static void main(String args []) throws ParseException  {    ASTParser parser = new ASTParser(System.in);    while (true)    {      System.out.println("Reading from standard input...");      System.out.print("Enter an expression like \"1+(2+3)*4;\" :");      try      {        parser.create_variable();
+import java.util.*;
+public class ASTParser{  public static void main(String args []) throws ParseException  {    ASTParser parser = new ASTParser(System.in);    while (true)    {      System.out.println("Reading from standard input...");      System.out.print("Enter an expression like \"1+(2+3)*4;\" :");      try      {        parser.statement();
         System.out.println("OK");      }      catch (Exception e)      {        System.out.println("NOK.");        System.out.println(e.getMessage());        ASTParser.ReInit(System.in);      }      catch (Error e)      {        System.out.println("Oops.");        System.out.println(e.getMessage());        break;      }    }  }}PARSER_END(ASTParser)
 /**********************************************
  * THE JAVACC TOKEN SPECIFICATION STARTS HERE *
@@ -171,13 +171,11 @@ public class ASTParser{  public static void main(String args []) throws ParseE
 }
 
 TOKEN:{
-    <INFIX_OPERATOR: < TEXT_ADD >|< TEXT_MINUS >|< TEXT_MULTIPLY >|< TEXT_DIVISION >
+    <INFIX_OPERATOR: < TEXT_ADD >|< TEXT_MINUS >|< TEXT_MULTIPLY >|< TEXT_DIVISION >|
     				 < TEXT_LESS_THAN >|< TEXT_GREATER_THAN >|< TEXT_EQUAL >|
     				 < TEXT_LESS_EQUAL >|< TEXT_GREATER_EQUAL >|< TEXT_NOT_EQUAL >|
     				 < TEXT_OR >|< TEXT_AND >|< TEXT_BIT_AND >|< TEXT_BIT_OR >|
-    				 < TEXT_XOR >|< TEXT_MOD >|< TEXT_PLUS_EQUAL >|< TEXT_MINUS_EQUAL >|
-    				 < TEXT_TIMES_EQUAL >|< TEXT_DIVIDE_EQUAL >|< TEXT_MOD_EQUAL >|
-    				 < TEXT_OR_EQUAL >|< TEXT_AND_EQUAL >|< TEXT_XOR_EQUAL >|
+    				 < TEXT_XOR >|< TEXT_MOD >|
     				 < TEXT_SHIFT_LEFT >|< TEXT_SHIFT_RIGHT >|< TEXT_SHIFT_RIGHT_ZERO > >| 	< TEXT_ADD: "#plus" >
 | 	< TEXT_MINUS:"#minus" >
 | 	< TEXT_MULTIPLY:"#multiply" >
@@ -194,6 +192,14 @@ TOKEN:{
 | 	< TEXT_BIT_OR: "#bit_or" >
 | 	< TEXT_XOR:"#bit_xor" >
 | 	< TEXT_MOD:"#mod" >
+| 	< TEXT_SHIFT_LEFT : "#shift_left" >
+| 	< TEXT_SHIFT_RIGHT : "#shift_right" >
+| 	< TEXT_SHIFT_RIGHT_ZERO : "#shift_right_zero" >
+}
+TOKEN:{
+  < COMPOUND_OPERATOR: < TEXT_PLUS_EQUAL >|< TEXT_MINUS_EQUAL >|
+    				 < TEXT_TIMES_EQUAL >|< TEXT_DIVIDE_EQUAL >|< TEXT_MOD_EQUAL >|
+    				 < TEXT_OR_EQUAL >|< TEXT_AND_EQUAL >|< TEXT_XOR_EQUAL >>
 | 	< TEXT_PLUS_EQUAL :"#plus_equal" >
 |   < TEXT_MINUS_EQUAL :"#minus_equal" >
 | 	< TEXT_TIMES_EQUAL :"#multiply_equal" >
@@ -201,18 +207,16 @@ TOKEN:{
 | 	< TEXT_MOD_EQUAL : "#mod_equal" >
 | 	< TEXT_AND_EQUAL : "#and_equal" >
 | 	< TEXT_OR_EQUAL : "#or_equal" >
-| 	< TEXT_XOR_EQUAL : "#xor_equal" >
-| 	< TEXT_SHIFT_LEFT : "#shift_left" >
-| 	< TEXT_SHIFT_RIGHT : "#shift_right" >
-| 	< TEXT_SHIFT_RIGHT_ZERO : "#shift_right_zero" >
-}TOKEN:
+| 	< TEXT_XOR_EQUAL : "#xor_equal" > }
+TOKEN:
 {
-  < PREFIX_OPERATOR: < TEXT_PRE_INC >|< TEXT_PRE_DEC >|< TEXT_NOT >|< TEXT_BIT_NOT > >
+  < PREFIX_OPERATOR: < TEXT_PRE_INC >|< TEXT_PRE_DEC >|< TEXT_NOT >>
 | < TEXT_PRE_INC: "#pre_inc" >
 | < TEXT_PRE_DEC: "#pre_dec" >
-| < TEXT_NOT:"#not" >
-| < TEXT_BIT_NOT:"#bit_not" >}
-
+| < TEXT_NOT:"#not" >}
+TOKEN:
+{
+   < TEXT_BIT_NOT:"#bit_not" >}
 TOKEN:
 {
     < POSTFIX_OPERATOR:<TEXT_POST_INC >|< TEXT_POST_DEC > > | 	< TEXT_POST_INC: "#post_inc" >
@@ -234,10 +238,13 @@ TOKEN:
 | < FUNCTION:"#function" >
 | < WITH:"#with" >
 | < CONDITION:"#condition" >
+| < EXPRESSIONS: "#expression" >
 | < IF_BRANCH_START:"#if_branch_start" >
 | < IF_BRANCH_END:"#if_branch_end" >
 | < ELSE_BRANCH_START:"#else_branch_start" >
 | < ELSE_BRANCH_END:"#else_branch_end" >
+| < PRE: "#pre" >
+| < POST:"#post" >
 | < TERMINATOR:";;" >
 }
 
@@ -255,63 +262,75 @@ TOKEN : {
 ASTExpressionUnitValue value():
 {
   Token n;
+  Token sign;
   ASTExpressionUnitValue valueNode;
 }
 {
   n = < INTEGER_LITERAL >  {
     valueNode = new ASTExpressionUnitValue(n.image);
-    System.out.println(valueNode.print());
+    //System.out.println(valueNode.print());
     return valueNode;
      }  | n = < FLOATING_POINT_LITERAL >{
     valueNode = new ASTExpressionUnitValue(n.image);
-    System.out.println(valueNode.print());
+    //System.out.println(valueNode.print());
     return valueNode;
   }
   | n= < CHARACTER_LITERAL >{
     valueNode = new ASTExpressionUnitValue(n.image);
-    System.out.println(valueNode.print());
+    //System.out.println(valueNode.print());
     return valueNode;
   }
   | n = < STRING_LITERAL >{
     valueNode = new ASTExpressionUnitValue(n.image);
-    System.out.println(valueNode.print());
+    //System.out.println(valueNode.print());
     return valueNode;
   }
+  | n = < TRUE >  {	 valueNode = new ASTExpressionUnitValue(n.image);
+	 return valueNode;
+  }
+  |  n = < FALSE >
+  {
+    valueNode = new ASTExpressionUnitValue(n.image);
+	 return valueNode;  }
+
 }
 
 String primitive_types():{Token n;}{	(
 		  n = < BYTE >		{
-		  System.out.println(n.image);
+		  //System.out.println(n.image);
 		  return n.image;		}
 		|n=< INT >
 		{
-		  System.out.println(n.image);
+		  //System.out.println(n.image);
 		  return n.image;		}
 		|n = < CHAR >
 		{
-		  System.out.println(n.image);
+		  //System.out.println(n.image);
 		  return n.image;
 		}
 		|n=< DOUBLE >
 		{
-		  System.out.println(n.image);
+		  //System.out.println(n.image);
 		  return n.image;
 		}
 		|n = < FLOAT >
 		{
-		  System.out.println(n.image);
+		  //System.out.println(n.image);
 		  return n.image;
 		}
 		|n = < LONG >
 		{
-		  System.out.println(n.image);
+		  //System.out.println(n.image);
 		  return n.image;
 		}
 		|n = < SHORT >
 		{
-		  System.out.println(n.image);
+		  //System.out.println(n.image);
 		  return n.image;
 		}
+		|n = < BOOLEAN >
+		{
+		  return n.image;		} 
 	)
 	
 }
@@ -323,67 +342,188 @@ String types():
 }{
   n =  < IDENTIFIER >  {    return n.image;  }  |type = primitive_types()  {
     return type;  }}
-ASTExpressionAssignment create_variable():{
+ASTNode create_variable():{
   String type;
-  String id_name;
   Token id;
-  Token var_id = new Token();
   ASTExpressionAssignment result;
   ASTExpressionUnitIdentifier var;
-  ASTExpressionUnitValue v = new ASTExpressionUnitValue();
-  ASTExpressionUnitIdentifier dest_var = new ASTExpressionUnitIdentifier();}
+  ASTExpression exp = new ASTExpression();}
 {
-  < CREATE >type = types()< TYPE ><VARIABLE >id=< IDENTIFIER >(< VALUE >v = value()|< FUNCTION >|< VARIABLE >var_id=< IDENTIFIER >)< TERMINATOR >	{
+  < CREATE >type = types()<VARIABLE >id=< IDENTIFIER >(exp = expression())< TERMINATOR >	{
 	  var = new ASTExpressionUnitIdentifier(id.image,type,true);
-	  if(v.getValue() == null)	  {		dest_var = new ASTExpressionUnitIdentifier(var_id.image,type);
-		result = new ASTExpressionAssignment(var,dest_var);
-	  }else	  {	    result = new ASTExpressionAssignment(var,v);
-	  }
-	  
-	  System.out.println(result.print());
+	  result = new ASTExpressionAssignment();
+	 	  result = new ASTExpressionAssignment(var,exp);
+
+	  //System.out.println(result.print());
 	  return result;	}
 }
-void fragment():
+ASTExpression fragment():
 {
   Token var = new Token();
   Token check = new Token();
   ASTExpressionUnitValue v = new ASTExpressionUnitValue();
+  ASTExpression result = new ASTExpression();
 }
 {
-  (< VALUE >v = value())|(< VARIABLE >var = < IDENTIFIER >)|(< FUNCTION >)|(check = < LPAREN > expression()< RPAREN >)}
+  (< VALUE >v = value()){
+     return v;
+  }|(< VARIABLE >var = < IDENTIFIER >){
+     return new ASTExpressionUnitIdentifier(var.image);
+  }|(< FUNCTION >){
+     return v;
+  }|(check = < LPAREN > result = expression()< RPAREN >){
+     result.setQuote();
+     return result;
+  }
+  }
 
-void term():
-{}
-{	fragment()(< INFIX_OPERATOR >fragment())+
-}
-
-void infix_expression():{}
-{	term()
-}
-void prefix_expression():{}
-{	(< TEXT_BIT_NOT ><VALUE >value())|(< PREFIX_OPERATOR ><VARIABLE ><IDENTIFIER >)
-}
-
-void postfix_expression():{}
+ASTExpression term():
 {
-  (< VARIABLE ><IDENTIFIER >)< POSTFIX_OPERATOR >}
-
-void expression():
-{}
-{
-  (LOOKAHEAD(2)prefix_expression()|LOOKAHEAD(2)infix_expression()|LOOKAHEAD(2)postfix_expression())
+  ArrayList<Token > operators = new ArrayList<Token >();
+  ArrayList<ASTExpression > operands = new ArrayList<ASTExpression >();
+  Token operator = new Token();
+  ASTExpression operand1;
+  ASTExpression operand2 = new ASTExpression();
+  ASTExpression result;
+}
+{	operand1 = fragment()(operator = < INFIX_OPERATOR >	{operators.add(operator);} operand2 = fragment()	{operands.add(operand2);})*
+	{
+	  
+	  	if(operator.image == null||operators.isEmpty())	  	{
+	  	  result = operand1;
+	  	  return result;	  	}
+	  	result = new ASTExpression();
+	  	while(!operators.isEmpty())	  	{			result = new ASTExpressionInfixOperation(operators.remove(0).image,operand1,operands.remove(0));
+			operand1 = result;
+	  	}
+		return result;
+	}
 }
 
-void assignment():
-{}
-{	< ASSIGNMENT ><VARIABLE ><IDENTIFIER ><WITH>expression()< TERMINATOR >
+ASTExpression infix_expression():{
+  ASTExpression result;
+}
+{	result = term()	{		return result;
+	}
+}
+ASTExpression prefix_expression():{
+  Token operator1;
+  Token operator2;
+  Token var_name;
+  ASTExpressionUnitValue v = new ASTExpressionUnitValue();
+  ASTExpressionUnitIdentifier i = new ASTExpressionUnitIdentifier();
+  ASTExpressionPrefixOperation result;
+}
+{	(operator1 = < TEXT_BIT_NOT ><VALUE > v = value())
+	{
+	  result = new ASTExpressionPrefixOperation(operator1.image,v);
+	  return result;	}
+	|(operator2 = < PREFIX_OPERATOR ><VARIABLE > var_name = <IDENTIFIER >)
+	{
+	  result = new ASTExpressionPrefixOperation();
+	  	  i = new ASTExpressionUnitIdentifier(var_name.image);
+	  result = new ASTExpressionPrefixOperation(operator2.image,i);
+
+	  return result;	}
 }
 
-void if_statement():
-{}
+ASTExpression postfix_expression():{
+  Token operator;
+  Token var;
+  
+}
 {
-  < IF > <CONDITION >expression()< IF_BRANCH_START >(statement())+<IF_BRANCH_END >}
-void statement():
-{}
+  < POST >(< VARIABLE >var = <IDENTIFIER >)operator = < POSTFIX_OPERATOR >  {
+    ASTExpressionUnitIdentifier i = new ASTExpressionUnitIdentifier(var.image);
+    ASTExpressionPostfixOperation result = new ASTExpressionPostfixOperation(operator.image,i);
+    //System.out.println(result.typeof());	return result;
+  }}
+
+ASTExpression expression():
 {
-  < ASSIGNMENT >}
+  ASTExpression result1 = new ASTExpression();
+  ASTExpression result2 = new ASTExpression();
+  ASTExpression result3 = new ASTExpression();
+}
+{
+  (result1 = prefix_expression(){
+    	//System.out.println("image"+result.print());
+    	//System.out.println("Hi");
+	  return result1;
+	}
+	|result2 = infix_expression(){
+	  System.out.println("image"+result2.print());
+	  //System.out.println("result3 "+result3.typeof());
+	  return result2;
+	}
+	|result3 = postfix_expression(){
+	  //System.out.println("image"+result.print());
+	  //System.out.println(result3.typeof());
+	  return result3;
+	})
+	
+}
+ASTNode compoundStatement():{
+  Token var;
+  Token operator;
+  ASTExpression exp;}
+{
+  < VARIABLE >var =  <IDENTIFIER >operator = < COMPOUND_OPERATOR >exp = expression()< TERMINATOR >
+  {
+    ASTExpressionUnitIdentifier variable = new ASTExpressionUnitIdentifier(var.image);
+    ASTExpressionInfixOperation result = new ASTExpressionInfixOperation(operator.image,variable,exp);
+    result.end();
+    return result;  }}
+ASTNode assignment():
+{
+  Token var;
+  ASTExpression exp;}
+{	< ASSIGNMENT ><VARIABLE >var = <IDENTIFIER ><WITH>exp = expression()< TERMINATOR >
+	{
+	  ASTExpressionUnitIdentifier variable = new ASTExpressionUnitIdentifier(var.image);
+	  ASTExpressionAssignment result = new ASTExpressionAssignment(variable,exp);
+	  //System.out.println(result.print());
+	  return result;	}
+}
+
+ASTIfStatement if_statement():
+{
+  ASTExpression condition;
+  ASTNode stat1;
+  ASTNode stat2;
+  ArrayList<ASTNode > ifStat = new ArrayList<ASTNode >();
+  ArrayList<ASTNode > elseStat = new ArrayList<ASTNode >();}
+{
+  < IF > <CONDITION >condition = expression()< IF_BRANCH_START >(stat1 = statement()  {ifStat.add(stat1);})*<IF_BRANCH_END >(< ELSE_BRANCH_START >(stat2 =statement()  {elseStat.add(stat2);})*< ELSE_BRANCH_END >)?< TERMINATOR >
+  {
+    System.out.println(condition.print());
+ 	ASTIfStatement result = new ASTIfStatement(condition,ifStat,elseStat);
+	
+ 	System.out.println(result.print());	
+    return result;  }}
+ASTNode statement():
+{
+  ASTNode result;}
+{
+  (     result = assignment()
+     {
+       System.out.println(result.print());
+       return result;     }
+    |result = if_statement()
+     {
+       System.out.println(result.print());
+       return result;     }
+    |result = create_variable()     {
+        System.out.println(result.print());		return result;
+     }
+    |result = compoundStatement()     {
+        System.out.println(result.print());		return result;
+     }
+    |result = prefix_expression()< TERMINATOR >     {
+       System.out.println(result.print());
+       return result;     }
+    |result = postfix_expression()< TERMINATOR >
+     {
+       System.out.println(result.print());
+       return result;     }
+  )}

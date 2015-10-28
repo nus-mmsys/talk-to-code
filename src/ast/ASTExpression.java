@@ -39,6 +39,9 @@ public class ASTExpression extends ASTNode {
 	public void setResult(String text){
 		this.result = text;
 	}
+	public void setQuote(){
+		this.isQuoted = true;
+	}
 	public String typeof() {
 		return super.typeof()+"->"+NODE_TYPE;
 	}

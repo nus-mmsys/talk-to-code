@@ -21,7 +21,7 @@ public class ASTExpressionInfixOperation extends ASTExpression{
 		this.isEnd = true;
 	}
 	public String print() {
-		this.result = identifier1.print() + operator + identifier2.print();
+		this.result = identifier1.print() + " "+operator +" "+ identifier2.print();
 		return super.print();
 	}
 	public String typeof() {

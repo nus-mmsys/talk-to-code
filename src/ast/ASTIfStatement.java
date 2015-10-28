@@ -20,6 +20,11 @@ public class ASTIfStatement extends ASTNode {
 		this.condition = e;
 		initialize();
 	}
+	public ASTIfStatement(ASTExpression e, ArrayList<ASTNode> ifBranch,ArrayList<ASTNode> elseBranch){
+		this.condition = e;
+		this.ifBranch = ifBranch;
+		this.elseBranch = elseBranch;
+	}
 	public void setIf(ASTNode e){
 		this.ifBranch.add(e);
 	}
@@ -32,11 +37,14 @@ public class ASTIfStatement extends ASTNode {
 		for(int i = 0;i<this.ifBranch.size();i++){
 			result+= ("\t"+this.ifBranch.get(i).print()+"\n");
 		}
-		result += "}\nelse {\n";
-		for(int j = 0; j<this.elseBranch.size();j++){
-			result+=("\t"+this.elseBranch.get(j).print()+"\n");
+		result += "\t}\n";
+		if(!this.elseBranch.isEmpty()){
+			result += "else {\n";
+			for(int j = 0; j<this.elseBranch.size();j++){
+				result+=("\t"+this.elseBranch.get(j).print()+"\n");
+			}
+			result +="}\n";
 		}
-		result +="}\n";
 		this.result = result;
 		return this.result;
 	}

@@ -273,81 +273,89 @@ public interface ASTParserConstants {
   /** RegularExpression Id. */
   int TEXT_MOD = 138;
   /** RegularExpression Id. */
-  int TEXT_PLUS_EQUAL = 139;
+  int TEXT_SHIFT_LEFT = 139;
   /** RegularExpression Id. */
-  int TEXT_MINUS_EQUAL = 140;
+  int TEXT_SHIFT_RIGHT = 140;
   /** RegularExpression Id. */
-  int TEXT_TIMES_EQUAL = 141;
+  int TEXT_SHIFT_RIGHT_ZERO = 141;
   /** RegularExpression Id. */
-  int TEXT_DIVIDE_EQUAL = 142;
+  int COMPOUND_OPERATOR = 142;
   /** RegularExpression Id. */
-  int TEXT_MOD_EQUAL = 143;
+  int TEXT_PLUS_EQUAL = 143;
   /** RegularExpression Id. */
-  int TEXT_AND_EQUAL = 144;
+  int TEXT_MINUS_EQUAL = 144;
   /** RegularExpression Id. */
-  int TEXT_OR_EQUAL = 145;
+  int TEXT_TIMES_EQUAL = 145;
   /** RegularExpression Id. */
-  int TEXT_XOR_EQUAL = 146;
+  int TEXT_DIVIDE_EQUAL = 146;
   /** RegularExpression Id. */
-  int TEXT_SHIFT_LEFT = 147;
+  int TEXT_MOD_EQUAL = 147;
   /** RegularExpression Id. */
-  int TEXT_SHIFT_RIGHT = 148;
+  int TEXT_AND_EQUAL = 148;
   /** RegularExpression Id. */
-  int TEXT_SHIFT_RIGHT_ZERO = 149;
+  int TEXT_OR_EQUAL = 149;
   /** RegularExpression Id. */
-  int PREFIX_OPERATOR = 150;
+  int TEXT_XOR_EQUAL = 150;
   /** RegularExpression Id. */
-  int TEXT_PRE_INC = 151;
+  int PREFIX_OPERATOR = 151;
   /** RegularExpression Id. */
-  int TEXT_PRE_DEC = 152;
+  int TEXT_PRE_INC = 152;
   /** RegularExpression Id. */
-  int TEXT_NOT = 153;
+  int TEXT_PRE_DEC = 153;
   /** RegularExpression Id. */
-  int TEXT_BIT_NOT = 154;
+  int TEXT_NOT = 154;
   /** RegularExpression Id. */
-  int POSTFIX_OPERATOR = 155;
+  int TEXT_BIT_NOT = 155;
   /** RegularExpression Id. */
-  int TEXT_POST_INC = 156;
+  int POSTFIX_OPERATOR = 156;
   /** RegularExpression Id. */
-  int TEXT_POST_DEC = 157;
+  int TEXT_POST_INC = 157;
   /** RegularExpression Id. */
-  int CONDITIONAL_OPERATOR = 158;
+  int TEXT_POST_DEC = 158;
   /** RegularExpression Id. */
-  int TEXT_IF_YES = 159;
+  int CONDITIONAL_OPERATOR = 159;
   /** RegularExpression Id. */
-  int TEXT_IF_NOT = 160;
+  int TEXT_IF_YES = 160;
   /** RegularExpression Id. */
-  int ASSIGNMENT = 161;
+  int TEXT_IF_NOT = 161;
   /** RegularExpression Id. */
-  int CREATE = 162;
+  int ASSIGNMENT = 162;
   /** RegularExpression Id. */
-  int TYPE = 163;
+  int CREATE = 163;
   /** RegularExpression Id. */
-  int VARIABLE = 164;
+  int TYPE = 164;
   /** RegularExpression Id. */
-  int VALUE = 165;
+  int VARIABLE = 165;
   /** RegularExpression Id. */
-  int FUNCTION = 166;
+  int VALUE = 166;
   /** RegularExpression Id. */
-  int WITH = 167;
+  int FUNCTION = 167;
   /** RegularExpression Id. */
-  int CONDITION = 168;
+  int WITH = 168;
   /** RegularExpression Id. */
-  int IF_BRANCH_START = 169;
+  int CONDITION = 169;
   /** RegularExpression Id. */
-  int IF_BRANCH_END = 170;
+  int EXPRESSIONS = 170;
   /** RegularExpression Id. */
-  int ELSE_BRANCH_START = 171;
+  int IF_BRANCH_START = 171;
   /** RegularExpression Id. */
-  int ELSE_BRANCH_END = 172;
+  int IF_BRANCH_END = 172;
   /** RegularExpression Id. */
-  int TERMINATOR = 173;
+  int ELSE_BRANCH_START = 173;
   /** RegularExpression Id. */
-  int IDENTIFIER = 174;
+  int ELSE_BRANCH_END = 174;
   /** RegularExpression Id. */
-  int LETTER = 175;
+  int PRE = 175;
   /** RegularExpression Id. */
-  int PART_LETTER = 176;
+  int POST = 176;
+  /** RegularExpression Id. */
+  int TERMINATOR = 177;
+  /** RegularExpression Id. */
+  int IDENTIFIER = 178;
+  /** RegularExpression Id. */
+  int LETTER = 179;
+  /** RegularExpression Id. */
+  int PART_LETTER = 180;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -495,6 +503,10 @@ public interface ASTParserConstants {
     "\"#bit_or\"",
     "\"#bit_xor\"",
     "\"#mod\"",
+    "\"#shift_left\"",
+    "\"#shift_right\"",
+    "\"#shift_right_zero\"",
+    "<COMPOUND_OPERATOR>",
     "\"#plus_equal\"",
     "\"#minus_equal\"",
     "\"#multiply_equal\"",
@@ -503,9 +515,6 @@ public interface ASTParserConstants {
     "\"#and_equal\"",
     "\"#or_equal\"",
     "\"#xor_equal\"",
-    "\"#shift_left\"",
-    "\"#shift_right\"",
-    "\"#shift_right_zero\"",
     "<PREFIX_OPERATOR>",
     "\"#pre_inc\"",
     "\"#pre_dec\"",
@@ -525,10 +534,13 @@ public interface ASTParserConstants {
     "\"#function\"",
     "\"#with\"",
     "\"#condition\"",
+    "\"#expression\"",
     "\"#if_branch_start\"",
     "\"#if_branch_end\"",
     "\"#else_branch_start\"",
     "\"#else_branch_end\"",
+    "\"#pre\"",
+    "\"#post\"",
     "\";;\"",
     "<IDENTIFIER>",
     "<LETTER>",

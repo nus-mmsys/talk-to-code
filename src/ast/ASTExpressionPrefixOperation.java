@@ -5,7 +5,7 @@ package ast;
 public class ASTExpressionPrefixOperation extends ASTExpression{
 	private static final String NODE_TYPE = "Prefix Operation";
 	private String operator;
-	private ASTExpressionUnitIdentifier identifier1;
+	private ASTExpressionUnit identifier1;
 	public ASTExpressionPrefixOperation(ASTNode a) {
 		super(a);
 	}
@@ -13,6 +13,11 @@ public class ASTExpressionPrefixOperation extends ASTExpression{
 		super();
 	}
 	public ASTExpressionPrefixOperation(String operator,ASTExpressionUnitIdentifier id1){
+		this.operator = operator;
+		this.identifier1 = id1;
+		this.isQuoted = false; 
+	}
+	public ASTExpressionPrefixOperation(String operator,ASTExpressionUnitValue id1){
 		this.operator = operator;
 		this.identifier1 = id1;
 		this.isQuoted = false; 

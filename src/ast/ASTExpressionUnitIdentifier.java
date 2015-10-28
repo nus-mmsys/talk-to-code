@@ -5,6 +5,8 @@ public class ASTExpressionUnitIdentifier extends ASTExpressionUnit{
 	private static final String VISIBLE_PUBLIC = "public";
 	private static final String VISIBLE_PROTECTED = "protected";
 	private static final String VISIBLE_PRIVATE = "private";
+	private static final String VISIBLE_LOCAL = "local";
+	private static final String VISIBLE_GLOBAL = "global";
 	protected String visibleType;
 	protected boolean isStatic;
 	protected boolean isDeclaration;
@@ -14,6 +16,14 @@ public class ASTExpressionUnitIdentifier extends ASTExpressionUnit{
 	}
 	public ASTExpressionUnitIdentifier(ASTNode a) {
 		super(a);
+	}
+	public ASTExpressionUnitIdentifier(String name){
+		this.name = name;
+		this.visibleType = VISIBLE_LOCAL;
+		this.isStatic = false;
+		this.isDeclaration = false;
+		this.isAttribute = false;
+		this.type = "UNDECLARED";
 	}
 	public ASTExpressionUnitIdentifier(String name,String type){
 		super(name,type);

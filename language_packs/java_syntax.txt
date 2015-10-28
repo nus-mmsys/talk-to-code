@@ -1,0 +1,17 @@
+#plus	+
+#minus	-
+#multiply	*
+#divide	/
+#less_than	<
+#greater_than >
+#equal	==
+#less_equal <=
+#greater_equal >=
+#not_equal	!=
+#or	||
+#and	&&
+#bit_and	&
+#bit_or	|
+#bit_xor	^
+#mod	%
+#plus_equal	+=
