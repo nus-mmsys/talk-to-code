@@ -452,7 +452,7 @@ ASTExpression expression():
 	  return result1;
 	}
 	|result2 = infix_expression(){
-	  System.out.println("image"+result2.print());
+	  //System.out.println("image"+result2.print());
 	  //System.out.println("result3 "+result3.typeof());
 	  return result2;
 	}
@@ -496,10 +496,10 @@ ASTIfStatement if_statement():
 {
   < IF > <CONDITION >condition = expression()< IF_BRANCH_START >(stat1 = statement()  {ifStat.add(stat1);})*<IF_BRANCH_END >(< ELSE_BRANCH_START >(stat2 =statement()  {elseStat.add(stat2);})*< ELSE_BRANCH_END >)?< TERMINATOR >
   {
-    System.out.println(condition.print());
+    //System.out.println(condition.print());
  	ASTIfStatement result = new ASTIfStatement(condition,ifStat,elseStat);
 	
- 	System.out.println(result.print());	
+ 	//System.out.println(result.print());	
     return result;  }}
 ASTNode statement():
 {
@@ -507,23 +507,23 @@ ASTNode statement():
 {
   (     result = assignment()
      {
-       System.out.println(result.print());
+       //System.out.println(result.print());
        return result;     }
     |result = if_statement()
      {
-       System.out.println(result.print());
+       //System.out.println(result.print());
        return result;     }
     |result = create_variable()     {
-        System.out.println(result.print());		return result;
+        //System.out.println(result.print());		return result;
      }
     |result = compoundStatement()     {
-        System.out.println(result.print());		return result;
+        //System.out.println(result.print());		return result;
      }
     |result = prefix_expression()< TERMINATOR >     {
-       System.out.println(result.print());
+       //System.out.println(result.print());
        return result;     }
     |result = postfix_expression()< TERMINATOR >
      {
-       System.out.println(result.print());
+       //System.out.println(result.print());
        return result;     }
   )}

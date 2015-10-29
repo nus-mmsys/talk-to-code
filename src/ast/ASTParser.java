@@ -320,7 +320,7 @@ public class ASTParser implements ASTParserConstants {
     case VALUE:
     case FUNCTION:
       result2 = infix_expression();
-          System.out.println("image"+result2.print());
+          //System.out.println("image"+result2.print());
           //System.out.println("result3 "+result3.typeof());
           {if (true) return result2;}
       break;
@@ -429,10 +429,10 @@ public class ASTParser implements ASTParserConstants {
       ;
     }
     jj_consume_token(TERMINATOR);
-    System.out.println(condition.print());
+    //System.out.println(condition.print());
         ASTIfStatement result = new ASTIfStatement(condition,ifStat,elseStat);
 
-        System.out.println(result.print());
+        //System.out.println(result.print());	
     {if (true) return result;}
     throw new Error("Missing return statement in function");
   }
@@ -442,35 +442,35 @@ public class ASTParser implements ASTParserConstants {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case ASSIGNMENT:
       result = assignment();
-       System.out.println(result.print());
+       //System.out.println(result.print());
        {if (true) return result;}
       break;
     case IF:
       result = if_statement();
-       System.out.println(result.print());
+       //System.out.println(result.print());
        {if (true) return result;}
       break;
     case CREATE:
       result = create_variable();
-        System.out.println(result.print());
+        //System.out.println(result.print());
                 {if (true) return result;}
       break;
     case VARIABLE:
       result = compoundStatement();
-        System.out.println(result.print());
+        //System.out.println(result.print());
                 {if (true) return result;}
       break;
     case PREFIX_OPERATOR:
     case TEXT_BIT_NOT:
       result = prefix_expression();
       jj_consume_token(TERMINATOR);
-       System.out.println(result.print());
+       //System.out.println(result.print());
        {if (true) return result;}
       break;
     case POST:
       result = postfix_expression();
       jj_consume_token(TERMINATOR);
-       System.out.println(result.print());
+       //System.out.println(result.print());
        {if (true) return result;}
       break;
     default:
