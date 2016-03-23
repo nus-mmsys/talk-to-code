@@ -11,9 +11,7 @@ public class ASTExpressionUnit extends ASTExpression {
 	public ASTExpressionUnit() {
 		super();
 	}
-	public ASTExpressionUnit(ASTNode a) {
-		super(a);
-	}
+
 	public ASTExpressionUnit(String name,String type){
 		super(new ASTExpression(false));
 		this.name = name;
@@ -25,17 +23,8 @@ public class ASTExpressionUnit extends ASTExpression {
 		this.value = value;
 		
 	}
-	public ASTExpressionUnit (ASTExpression a,String name,String type,String value) {
-		super(a);
-		this.name = name;
-		this.type = type;
-		this.value = value;
-	}
-	public ASTExpressionUnit(ASTExpression a,String name,String type,String value,String unitClass){
 
-		this(a,name,type,value);
-		
-	}
+
 	public ASTExpressionUnit(ASTExpressionUnit a){
 		super(a.result,a.isEnd,a.isQuoted);
 		this.name = a.name;
@@ -61,8 +50,8 @@ public class ASTExpressionUnit extends ASTExpression {
 	public String getValue() {
 		return this.value;
 	}
-	public String print() {
-		return super.print();
+	public String toSyntax() {
+		return super.toSyntax();
 	}
 	public void setValue(String value){
 		this.value = value;

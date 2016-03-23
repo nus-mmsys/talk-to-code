@@ -2,25 +2,25 @@ package ast;
 
 public class ASTExpressionPostfixOperation extends ASTExpression{
 	private static final String NODE_TYPE = "Postfix Operation";
-	private String operator;
+	private ASTExpressionUnitOperator op;
 	private ASTExpressionUnitIdentifier identifier1;
-	public ASTExpressionPostfixOperation(ASTNode a) {
-		super(a);
-	}
+	private int usability;
 	public ASTExpressionPostfixOperation(){
 		super();
 	}
+
 	public ASTExpressionPostfixOperation(String operator,ASTExpressionUnitIdentifier id1){
-		this.operator = operator;
+		this.op = new ASTExpressionUnitOperator(operator);
 		this.identifier1 = id1;
-		this.isQuoted = false; 
+		this.op.addParent(this);
+		this.identifier1.addParent(this);
 	}
-	public void end() {
-		this.isEnd = true;
+	public boolean isValid(int currentProgrammingLanguage){
+		return (currentProgrammingLanguage&(1<<this.usability))!=0;
 	}
-	public String print() {
-		this.result = identifier1.print() + operator;
-		return super.print();
+	public String toSyntax() {
+		this.result = identifier1.toSyntax() + this.op.toSyntax();
+		return this.result;
 	}
 	public String typeof() {
 		return super.typeof()+"->"+NODE_TYPE;

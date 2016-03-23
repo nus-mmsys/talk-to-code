@@ -2,22 +2,30 @@ package ast;
 
 public class ASTExpressionAssignment extends ASTExpression{
 	private static final String NODE_TYPE = "Assignment";
-	private ASTExpressionUnit object;
+	private ASTExpression object;
 	private ASTExpression exp;
+	private ASTExpressionUnitOperator op;
 	
 	public ASTExpressionAssignment(){
 		super();
 	}
-	public ASTExpressionAssignment(ASTExpressionUnit variable,ASTExpression exp){
+	public ASTExpressionAssignment(ASTExpression variable,ASTExpression exp,String operator){
 		this.object = variable;
 		this.exp = exp;
-		this.isEnd = true;
+		this.op = new ASTExpressionUnitOperator(operator);
+	
 	}
-	public String print(){
-		this.result = this.object.print() + " = "+this.exp.print();
-		return super.print();
+	public String toSyntax(){
+		this.result = this.object.toSyntax() + " "+this.op.toSyntax()+" "+this.exp.toSyntax();
+		return super.toSyntax();
 	}
 	public String typeof(){
-		return super.typeof()+this.NODE_TYPE;
+		return super.typeof()+NODE_TYPE;
+	}
+	public ASTExpression getObject(){
+		return this.object;
+	}
+	public ASTExpression getExp(){
+		return this.exp;
 	}
 }

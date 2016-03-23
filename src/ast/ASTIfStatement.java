@@ -1,17 +1,15 @@
 package ast;
 import java.util.*;
-public class ASTIfStatement extends ASTNode {
+public class ASTIfStatement extends ASTBlockStatement {
 	private static final String NODE_TYPE = "If Statement";
-	private ASTExpression condition;
-	private ArrayList<ASTNode> ifBranch;
-	private ArrayList<ASTNode> elseBranch;
-	private String result;
-	
+	protected ASTExpression condition;
+	protected ArrayList<ASTStatement> ifBranch;
+	protected ArrayList<ASTStatement> elseBranch;
+	protected String result;
 	private void initialize() {
-		this.ifBranch =  new ArrayList<ASTNode>();
-		this.elseBranch = new ArrayList<ASTNode>();
+		this.ifBranch =  new ArrayList<ASTStatement>();
+		this.elseBranch = new ArrayList<ASTStatement>();
 	}
-	
 	public ASTIfStatement() {
 		super();
 		initialize();
@@ -19,33 +17,22 @@ public class ASTIfStatement extends ASTNode {
 	public ASTIfStatement(ASTExpression e){
 		this.condition = e;
 		initialize();
+		e.addParent(this);
 	}
-	public ASTIfStatement(ASTExpression e, ArrayList<ASTNode> ifBranch,ArrayList<ASTNode> elseBranch){
-		this.condition = e;
-		this.ifBranch = ifBranch;
-		this.elseBranch = elseBranch;
-	}
-	public void setIf(ASTNode e){
+
+	public void setIf(ASTStatement e){
 		this.ifBranch.add(e);
+		e.addParent(this);
+	}
+	public void setElse(ASTStatement e){
+		this.elseBranch.add(e);
+		e.addParent(this);
 	}
 	public String typeof() {
 		return super.typeof()+"->"+NODE_TYPE;
 	}
-	public String print() {
-		String result = "";
-		result += ("if("+this.condition.print()+") {\n");
-		for(int i = 0;i<this.ifBranch.size();i++){
-			result+= ("\t"+this.ifBranch.get(i).print()+"\n");
-		}
-		result += "\t}\n";
-		if(!this.elseBranch.isEmpty()){
-			result += "else {\n";
-			for(int j = 0; j<this.elseBranch.size();j++){
-				result+=("\t"+this.elseBranch.get(j).print()+"\n");
-			}
-			result +="}\n";
-		}
-		this.result = result;
+	public String toSyntax() {
+
 		return this.result;
 	}
 }

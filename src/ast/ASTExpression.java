@@ -3,13 +3,9 @@ package ast;
 public class ASTExpression extends ASTNode {
 	private static final String NODE_TYPE = "Expression";
 	
-	protected String result;
 	protected boolean isEnd = false;
 	protected boolean isQuoted = false;
 	
-	public ASTExpression(ASTNode a) {
-		super(a);
-	}
 	public ASTExpression(){
 		super();
 	}
@@ -45,20 +41,10 @@ public class ASTExpression extends ASTNode {
 	public String typeof() {
 		return super.typeof()+"->"+NODE_TYPE;
 	}
-	public String print() {
-
-		if(this.isQuoted) {
-			this.result = quote(this.result);
-		}
-		if(this.isEnd){
-			this.result = end(this.result);
-		}
+	public String toSyntax() {	
 		return this.result;
 	}
-	protected static String quote(String text){
-		return "("+text+")";
-	}
-	protected static String end(String text){
-		return text+";";
+	protected void quote(){
+		this.result = "("+this.result+")";
 	}
 }

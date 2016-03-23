@@ -1,529 +1,14 @@
 /**
  * JavaCC template file created by SF JavaCC plugin 1.5.28+ wizard for JavaCC 1.5.0+
- */options{  static = true;}PARSER_BEGIN(ASTParser)package ast;
-import java.util.*;
-public class ASTParser{  public static void main(String args []) throws ParseException  {    ASTParser parser = new ASTParser(System.in);    while (true)    {      System.out.println("Reading from standard input...");      System.out.print("Enter an expression like \"1+(2+3)*4;\" :");      try      {        parser.statement();
-        System.out.println("OK");      }      catch (Exception e)      {        System.out.println("NOK.");        System.out.println(e.getMessage());        ASTParser.ReInit(System.in);      }      catch (Error e)      {        System.out.println("Oops.");        System.out.println(e.getMessage());        break;      }    }  }}PARSER_END(ASTParser)
-/**********************************************
+ */options{  static = true;}PARSER_BEGIN(ASTParser)package ast;import java.util.*;public class ASTParser{  public static void main(String args []) throws ParseException  {    ASTParser parser = new ASTParser(System.in);    while (true)    {      System.out.println("Reading from standard input...");      System.out.print("Enter an expression like \"1+(2+3)*4;\" :");      try      {        program();        System.out.println("OK");      }      catch (Exception e)      {        System.out.println("NOK.");        System.out.println(e.getMessage());        ASTParser.ReInit(System.in);      }      catch (Error e)      {        System.out.println("Oops.");        System.out.println(e.getMessage());        break;      }    }  }}PARSER_END(ASTParser)/**********************************************
  * THE JAVACC TOKEN SPECIFICATION STARTS HERE *
- **********************************************/
-
-/* JAVACC RESERVED WORDS: These are the only tokens in JavaCC but not in Java */
-<DEFAULT> TOKEN : {
-<_LOOKAHEAD: "LOOKAHEAD">
-| <_IGNORE_CASE: "IGNORE_CASE">
-| <_PARSER_BEGIN: "PARSER_BEGIN">
-| <_PARSER_END: "PARSER_END">
-| <_JAVACODE: "JAVACODE">
-| <_TOKEN: "TOKEN">
-| <_SPECIAL_TOKEN: "SPECIAL_TOKEN">
-| <_MORE: "MORE">
-| <_SKIP: "SKIP">
-| <_TOKEN_MGR_DECLS: "TOKEN_MGR_DECLS">
-| <_EOF: "EOF">
-}
-
-   
-/*
+ **********************************************//* JAVACC RESERVED WORDS: These are the only tokens in JavaCC but not in Java */< DEFAULT >TOKEN :{  < _LOOKAHEAD : "LOOKAHEAD" >| < _IGNORE_CASE : "IGNORE_CASE" >| < _PARSER_BEGIN : "PARSER_BEGIN" >| < _PARSER_END : "PARSER_END" >| < _JAVACODE : "JAVACODE" >| < _TOKEN : "TOKEN" >| < _SPECIAL_TOKEN : "SPECIAL_TOKEN" >| < _MORE : "MORE" >| < _SKIP : "SKIP" >| < _TOKEN_MGR_DECLS : "TOKEN_MGR_DECLS" >| < _EOF : "EOF" >}/*
  * The remainder of the tokens are exactly (except for the removal of tokens
  * containing ">>" and "<<") as in the Java grammar and must be diff equivalent
  * (again with the exceptions above) to it.
- */
-
-/* WHITE SPACE */
-<DEFAULT> SKIP : {
-" "
-| "\t"
-| "\n"
-| "\r"
-| "\f"
-| "/*@egen*/" : AFTER_EGEN
-}
-
-   
-<AFTER_EGEN> SKIP : {
-<~[]> : DEFAULT
-}
-
-   
-
-   
-/* JAVA RESERVED WORDS AND LITERALS */
-<DEFAULT> TOKEN : {
-<ABSTRACT: "abstract">
-| <ASSERT: "assert">
-| <BOOLEAN: "boolean">
-| <BREAK: "break">
-| <BYTE: "byte">
-| <CASE: "case">
-| <CATCH: "catch">
-| <CHAR: "char">
-| <CLASS: "class">
-| <CONST: "const">
-| <CONTINUE: "continue">
-| <_DEFAULT: "default">
-| <DO: "do">
-| <DOUBLE: "double">
-| <ELSE: "else">
-| <ENUM: "enum">
-| <EXTENDS: "extends">
-| <FALSE: "false">
-| <FINAL: "final">
-| <FINALLY: "finally">
-| <FLOAT: "float">
-| <FOR: "for">
-| <GOTO: "goto">
-| <IF: "if">
-| <IMPLEMENTS: "implements">
-| <IMPORT: "import">
-| <INSTANCEOF: "instanceof">
-| <INT: "int">
-| <INTERFACE: "interface">
-| <LONG: "long">
-| <NATIVE: "native">
-| <NEW: "new">
-| <NULL: "null">
-| <PACKAGE: "package">
-| <PRIVATE: "private">
-| <PROTECTED: "protected">
-| <PUBLIC: "public">
-| <RETURN: "return">
-| <SHORT: "short">
-| <STATIC: "static">
-| <STRICTFP: "strictfp">
-| <SUPER: "super">
-| <SWITCH: "switch">
-| <SYNCHRONIZED: "synchronized">
-| <THIS: "this">
-| <THROW: "throw">
-| <THROWS: "throws">
-| <TRANSIENT: "transient">
-| <TRUE: "true">
-| <TRY: "try">
-| <VOID: "void">
-| <VOLATILE: "volatile">
-| <WHILE: "while">
-}
-
-   
-/* JAVA LITERALS */
-<DEFAULT> TOKEN : {
-<INTEGER_LITERAL: <DECIMAL_LITERAL> (["l","L"])? | <HEX_LITERAL> (["l","L"])? | <OCTAL_LITERAL> (["l","L"])?>
-| <#DECIMAL_LITERAL: ["1"-"9"] (["0"-"9"])*>
-| <#HEX_LITERAL: "0" ["x","X"] (["0"-"9","a"-"f","A"-"F"])+>
-| <#OCTAL_LITERAL: "0" (["0"-"7"])*>
-| <FLOATING_POINT_LITERAL: <DECIMAL_FLOATING_POINT_LITERAL> | <HEXADECIMAL_FLOATING_POINT_LITERAL>>
-| <#DECIMAL_FLOATING_POINT_LITERAL: (["0"-"9"])+ "." (["0"-"9"])* (<DECIMAL_EXPONENT>)? (["f","F","d","D"])? | "." (["0"-"9"])+ (<DECIMAL_EXPONENT>)? (["f","F","d","D"])? | (["0"-"9"])+ <DECIMAL_EXPONENT> (["f","F","d","D"])? | (["0"-"9"])+ (<DECIMAL_EXPONENT>)? ["f","F","d","D"]>
-| <#DECIMAL_EXPONENT: ["e","E"] (["+","-"])? (["0"-"9"])+>
-| <#HEXADECIMAL_FLOATING_POINT_LITERAL: "0" ["x","X"] (["0"-"9","a"-"f","A"-"F"])+ (".")? <HEXADECIMAL_EXPONENT> (["f","F","d","D"])? | "0" ["x","X"] (["0"-"9","a"-"f","A"-"F"])* "." (["0"-"9","a"-"f","A"-"F"])+ <HEXADECIMAL_EXPONENT> (["f","F","d","D"])?>
-| <#HEXADECIMAL_EXPONENT: ["p","P"] (["+","-"])? (["0"-"9"])+>
-| <CHARACTER_LITERAL: "\'" (~["\'","\\","\n","\r"] | "\\" (["n","t","b","r","f","\\","\'","\""] | ["0"-"7"] (["0"-"7"])? | ["0"-"3"] ["0"-"7"] ["0"-"7"])) "\'">
-| <STRING_LITERAL: "\"" (~["\"","\\","\n","\r"] | "\\" (["n","t","b","r","f","\\","\'","\""] | ["0"-"7"] (["0"-"7"])? | ["0"-"3"] ["0"-"7"] ["0"-"7"]))* "\"">
-}
-
-   
-/* SEPARATORS */
-<DEFAULT> TOKEN : {
-<LPAREN: "(">
-| <RPAREN: ")">
-| <LBRACE: "{">
-| <RBRACE: "}">
-| <LBRACKET: "[">
-| <RBRACKET: "]">
-| <SEMICOLON: ";">
-| <COMMA: ",">
-| <DOT: ".">
-}
-
-   
-/* OPERATORS */
-<DEFAULT> TOKEN : {
-<ASSIGN: "=">
-| <LT: "<">
-| <BANG: "!">
-| <TILDE: "~">
-| <HOOK: "?">
-| <COLON: ":">
-| <EQ: "==">
-| <LE: "<=">
-| <GE: ">=">
-| <NE: "!=">
-| <SC_OR: "||">
-| <SC_AND: "&&">
-| <INCR: "++">
-| <DECR: "--">
-| <PLUS: "+">
-| <MINUS: "-">
-| <STAR: "*">
-| <SLASH: "/">
-| <BIT_AND: "&">
-| <BIT_OR: "|">
-| <XOR: "^">
-| <REM: "%">
-| <PLUSASSIGN: "+=">
-| <MINUSASSIGN: "-=">
-| <STARASSIGN: "*=">
-| <SLASHASSIGN: "/=">
-| <ANDASSIGN: "&=">
-| <ORASSIGN: "|=">
-| <XORASSIGN: "^=">
-| <REMASSIGN: "%=">
-}
-
-TOKEN:{
-    <INFIX_OPERATOR: < TEXT_ADD >|< TEXT_MINUS >|< TEXT_MULTIPLY >|< TEXT_DIVISION >|
-    				 < TEXT_LESS_THAN >|< TEXT_GREATER_THAN >|< TEXT_EQUAL >|
-    				 < TEXT_LESS_EQUAL >|< TEXT_GREATER_EQUAL >|< TEXT_NOT_EQUAL >|
-    				 < TEXT_OR >|< TEXT_AND >|< TEXT_BIT_AND >|< TEXT_BIT_OR >|
-    				 < TEXT_XOR >|< TEXT_MOD >|
-    				 < TEXT_SHIFT_LEFT >|< TEXT_SHIFT_RIGHT >|< TEXT_SHIFT_RIGHT_ZERO > >| 	< TEXT_ADD: "#plus" >
-| 	< TEXT_MINUS:"#minus" >
-| 	< TEXT_MULTIPLY:"#multiply" >
-| 	< TEXT_DIVISION:"#divide" >
-| 	< TEXT_LESS_THAN:"#less_than" >
-| 	< TEXT_GREATER_THAN:"#greater_than" >
-| 	< TEXT_EQUAL: "#equal" >
-|  	< TEXT_LESS_EQUAL: "#less_equal" >
-|   < TEXT_GREATER_EQUAL:"#greater_equal" >
-| 	< TEXT_NOT_EQUAL:"#not_equal" >
-| 	< TEXT_OR: "#or" >
-| 	< TEXT_AND: "#and" >
-| 	< TEXT_BIT_AND: "#bit_and" >
-| 	< TEXT_BIT_OR: "#bit_or" >
-| 	< TEXT_XOR:"#bit_xor" >
-| 	< TEXT_MOD:"#mod" >
-| 	< TEXT_SHIFT_LEFT : "#shift_left" >
-| 	< TEXT_SHIFT_RIGHT : "#shift_right" >
-| 	< TEXT_SHIFT_RIGHT_ZERO : "#shift_right_zero" >
-}
-TOKEN:{
-  < COMPOUND_OPERATOR: < TEXT_PLUS_EQUAL >|< TEXT_MINUS_EQUAL >|
-    				 < TEXT_TIMES_EQUAL >|< TEXT_DIVIDE_EQUAL >|< TEXT_MOD_EQUAL >|
-    				 < TEXT_OR_EQUAL >|< TEXT_AND_EQUAL >|< TEXT_XOR_EQUAL >>
-| 	< TEXT_PLUS_EQUAL :"#plus_equal" >
-|   < TEXT_MINUS_EQUAL :"#minus_equal" >
-| 	< TEXT_TIMES_EQUAL :"#multiply_equal" >
-| 	< TEXT_DIVIDE_EQUAL :"#divide_equal" >
-| 	< TEXT_MOD_EQUAL : "#mod_equal" >
-| 	< TEXT_AND_EQUAL : "#and_equal" >
-| 	< TEXT_OR_EQUAL : "#or_equal" >
-| 	< TEXT_XOR_EQUAL : "#xor_equal" > }
-TOKEN:
-{
-  < PREFIX_OPERATOR: < TEXT_PRE_INC >|< TEXT_PRE_DEC >|< TEXT_NOT >>
-| < TEXT_PRE_INC: "#pre_inc" >
-| < TEXT_PRE_DEC: "#pre_dec" >
-| < TEXT_NOT:"#not" >}
-TOKEN:
-{
-   < TEXT_BIT_NOT:"#bit_not" >}
-TOKEN:
-{
-    < POSTFIX_OPERATOR:<TEXT_POST_INC >|< TEXT_POST_DEC > > | 	< TEXT_POST_INC: "#post_inc" >
-|   < TEXT_POST_DEC: "#post_dec" >
-}
-TOKEN:{
-  < CONDITIONAL_OPERATOR:< TEXT_IF_YES >|< TEXT_IF_NOT > > 
-| < TEXT_IF_YES: "#if_yes" >
-| < TEXT_IF_NOT: "#if_not" >}
-
-/* keywords */
-TOKEN:
-{
-  < ASSIGNMENT : "#assign" >
-| < CREATE : "#create" >
-| < TYPE : "#type" >
-| < VARIABLE: "#variable" >
-| < VALUE: "#value" >
-| < FUNCTION:"#function" >
-| < WITH:"#with" >
-| < CONDITION:"#condition" >
-| < EXPRESSIONS: "#expression" >
-| < IF_BRANCH_START:"#if_branch_start" >
-| < IF_BRANCH_END:"#if_branch_end" >
-| < ELSE_BRANCH_START:"#else_branch_start" >
-| < ELSE_BRANCH_END:"#else_branch_end" >
-| < PRE: "#pre" >
-| < POST:"#post" >
-| < TERMINATOR:";;" >
-}
-
-   
-/* IDENTIFIERS */
-TOKEN : {
-<IDENTIFIER: <LETTER> (<PART_LETTER>)*>
-| <#LETTER: ["$","A"-"Z","_","a"-"z"]>
-| <#PART_LETTER: ["$","0"-"9","A"-"Z","_","a"-"z"]>
-}
-
-
-
-
-ASTExpressionUnitValue value():
-{
-  Token n;
-  Token sign;
-  ASTExpressionUnitValue valueNode;
-}
-{
-  n = < INTEGER_LITERAL >  {
-    valueNode = new ASTExpressionUnitValue(n.image);
-    //System.out.println(valueNode.print());
-    return valueNode;
-     }  | n = < FLOATING_POINT_LITERAL >{
-    valueNode = new ASTExpressionUnitValue(n.image);
-    //System.out.println(valueNode.print());
-    return valueNode;
-  }
-  | n= < CHARACTER_LITERAL >{
-    valueNode = new ASTExpressionUnitValue(n.image);
-    //System.out.println(valueNode.print());
-    return valueNode;
-  }
-  | n = < STRING_LITERAL >{
-    valueNode = new ASTExpressionUnitValue(n.image);
-    //System.out.println(valueNode.print());
-    return valueNode;
-  }
-  | n = < TRUE >  {	 valueNode = new ASTExpressionUnitValue(n.image);
-	 return valueNode;
-  }
-  |  n = < FALSE >
-  {
-    valueNode = new ASTExpressionUnitValue(n.image);
-	 return valueNode;  }
-
-}
-
-String primitive_types():{Token n;}{	(
-		  n = < BYTE >		{
-		  //System.out.println(n.image);
-		  return n.image;		}
-		|n=< INT >
-		{
-		  //System.out.println(n.image);
-		  return n.image;		}
-		|n = < CHAR >
-		{
-		  //System.out.println(n.image);
-		  return n.image;
-		}
-		|n=< DOUBLE >
-		{
-		  //System.out.println(n.image);
-		  return n.image;
-		}
-		|n = < FLOAT >
-		{
-		  //System.out.println(n.image);
-		  return n.image;
-		}
-		|n = < LONG >
-		{
-		  //System.out.println(n.image);
-		  return n.image;
-		}
-		|n = < SHORT >
-		{
-		  //System.out.println(n.image);
-		  return n.image;
-		}
-		|n = < BOOLEAN >
-		{
-		  return n.image;		} 
-	)
-	
-}
-
-String types():
-{
-  String type;
-  Token n;
-}{
-  n =  < IDENTIFIER >  {    return n.image;  }  |type = primitive_types()  {
-    return type;  }}
-ASTNode create_variable():{
-  String type;
-  Token id;
-  ASTExpressionAssignment result;
-  ASTExpressionUnitIdentifier var;
-  ASTExpression exp = new ASTExpression();}
-{
-  < CREATE >type = types()<VARIABLE >id=< IDENTIFIER >(exp = expression())< TERMINATOR >	{
-	  var = new ASTExpressionUnitIdentifier(id.image,type,true);
-	  result = new ASTExpressionAssignment();
-	 	  result = new ASTExpressionAssignment(var,exp);
-
-	  //System.out.println(result.print());
-	  return result;	}
-}
-ASTExpression fragment():
-{
-  Token var = new Token();
-  Token check = new Token();
-  ASTExpressionUnitValue v = new ASTExpressionUnitValue();
-  ASTExpression result = new ASTExpression();
-}
-{
-  (< VALUE >v = value()){
-     return v;
-  }|(< VARIABLE >var = < IDENTIFIER >){
-     return new ASTExpressionUnitIdentifier(var.image);
-  }|(< FUNCTION >){
-     return v;
-  }|(check = < LPAREN > result = expression()< RPAREN >){
-     result.setQuote();
-     return result;
-  }
-  }
-
-ASTExpression term():
-{
-  ArrayList<Token > operators = new ArrayList<Token >();
-  ArrayList<ASTExpression > operands = new ArrayList<ASTExpression >();
-  Token operator = new Token();
-  ASTExpression operand1;
-  ASTExpression operand2 = new ASTExpression();
-  ASTExpression result;
-}
-{	operand1 = fragment()(operator = < INFIX_OPERATOR >	{operators.add(operator);} operand2 = fragment()	{operands.add(operand2);})*
-	{
-	  
-	  	if(operator.image == null||operators.isEmpty())	  	{
-	  	  result = operand1;
-	  	  return result;	  	}
-	  	result = new ASTExpression();
-	  	while(!operators.isEmpty())	  	{			result = new ASTExpressionInfixOperation(operators.remove(0).image,operand1,operands.remove(0));
-			operand1 = result;
-	  	}
-		return result;
-	}
-}
-
-ASTExpression infix_expression():{
-  ASTExpression result;
-}
-{	result = term()	{		return result;
-	}
-}
-ASTExpression prefix_expression():{
-  Token operator1;
-  Token operator2;
-  Token var_name;
-  ASTExpressionUnitValue v = new ASTExpressionUnitValue();
-  ASTExpressionUnitIdentifier i = new ASTExpressionUnitIdentifier();
-  ASTExpressionPrefixOperation result;
-}
-{	(operator1 = < TEXT_BIT_NOT ><VALUE > v = value())
-	{
-	  result = new ASTExpressionPrefixOperation(operator1.image,v);
-	  return result;	}
-	|(operator2 = < PREFIX_OPERATOR ><VARIABLE > var_name = <IDENTIFIER >)
-	{
-	  result = new ASTExpressionPrefixOperation();
-	  	  i = new ASTExpressionUnitIdentifier(var_name.image);
-	  result = new ASTExpressionPrefixOperation(operator2.image,i);
-
-	  return result;	}
-}
-
-ASTExpression postfix_expression():{
-  Token operator;
-  Token var;
-  
-}
-{
-  < POST >(< VARIABLE >var = <IDENTIFIER >)operator = < POSTFIX_OPERATOR >  {
-    ASTExpressionUnitIdentifier i = new ASTExpressionUnitIdentifier(var.image);
-    ASTExpressionPostfixOperation result = new ASTExpressionPostfixOperation(operator.image,i);
-    //System.out.println(result.typeof());	return result;
-  }}
-
-ASTExpression expression():
-{
-  ASTExpression result1 = new ASTExpression();
-  ASTExpression result2 = new ASTExpression();
-  ASTExpression result3 = new ASTExpression();
-}
-{
-  (result1 = prefix_expression(){
-    	//System.out.println("image"+result.print());
-    	//System.out.println("Hi");
-	  return result1;
-	}
-	|result2 = infix_expression(){
-	  //System.out.println("image"+result2.print());
-	  //System.out.println("result3 "+result3.typeof());
-	  return result2;
-	}
-	|result3 = postfix_expression(){
-	  //System.out.println("image"+result.print());
-	  //System.out.println(result3.typeof());
-	  return result3;
-	})
-	
-}
-ASTNode compoundStatement():{
-  Token var;
-  Token operator;
-  ASTExpression exp;}
-{
-  < VARIABLE >var =  <IDENTIFIER >operator = < COMPOUND_OPERATOR >exp = expression()< TERMINATOR >
-  {
-    ASTExpressionUnitIdentifier variable = new ASTExpressionUnitIdentifier(var.image);
-    ASTExpressionInfixOperation result = new ASTExpressionInfixOperation(operator.image,variable,exp);
-    result.end();
-    return result;  }}
-ASTNode assignment():
-{
-  Token var;
-  ASTExpression exp;}
-{	< ASSIGNMENT ><VARIABLE >var = <IDENTIFIER ><WITH>exp = expression()< TERMINATOR >
-	{
-	  ASTExpressionUnitIdentifier variable = new ASTExpressionUnitIdentifier(var.image);
-	  ASTExpressionAssignment result = new ASTExpressionAssignment(variable,exp);
-	  //System.out.println(result.print());
-	  return result;	}
-}
-
-ASTIfStatement if_statement():
-{
-  ASTExpression condition;
-  ASTNode stat1;
-  ASTNode stat2;
-  ArrayList<ASTNode > ifStat = new ArrayList<ASTNode >();
-  ArrayList<ASTNode > elseStat = new ArrayList<ASTNode >();}
-{
-  < IF > <CONDITION >condition = expression()< IF_BRANCH_START >(stat1 = statement()  {ifStat.add(stat1);})*<IF_BRANCH_END >(< ELSE_BRANCH_START >(stat2 =statement()  {elseStat.add(stat2);})*< ELSE_BRANCH_END >)?< TERMINATOR >
-  {
-    //System.out.println(condition.print());
- 	ASTIfStatement result = new ASTIfStatement(condition,ifStat,elseStat);
-	
- 	//System.out.println(result.print());	
-    return result;  }}
-ASTNode statement():
-{
-  ASTNode result;}
-{
-  (     result = assignment()
-     {
-       //System.out.println(result.print());
-       return result;     }
-    |result = if_statement()
-     {
-       //System.out.println(result.print());
-       return result;     }
-    |result = create_variable()     {
-        //System.out.println(result.print());		return result;
-     }
-    |result = compoundStatement()     {
-        //System.out.println(result.print());		return result;
-     }
-    |result = prefix_expression()< TERMINATOR >     {
-       //System.out.println(result.print());
-       return result;     }
-    |result = postfix_expression()< TERMINATOR >
-     {
-       //System.out.println(result.print());
-       return result;     }
-  )}
+ *//* WHITE SPACE */< DEFAULT >SKIP :{  " "| "\t"| "\n"| "\r"| "\f"| "/*@egen*/" : AFTER_EGEN}< AFTER_EGEN >SKIP :{  < ~[ ] > : DEFAULT}/* JAVA RESERVED WORDS AND LITERALS */< DEFAULT >TOKEN :{  < ABSTRACT : "abstract" >| < ASSERT : "assert" >| < BOOLEAN : "boolean" >| < BREAK : "break" >| < BYTE : "byte" >| < CASE : "case" >| < CATCH : "catch" >| < CHAR : "char" >| < CLASS : "class" >| < CONST : "const" >| < CONTINUE : "continue" >| < _DEFAULT : "default" >| < DO : "do" >| < DOUBLE : "double" >| < ELSE : "else" >| < ENUM : "enum" >| < EXTENDS : "extends" >| < FALSE : "false" >| < FINAL : "final" >| < FINALLY : "finally" >| < FLOAT : "float" >| < FOR : "for" >| < GOTO : "goto" >| < IF : "if" >| < IMPLEMENTS : "implements" >| < IMPORT : "import" >| < INSTANCEOF : "instanceof" >| < INT : "int" >| < INTERFACE : "interface" >| < LONG : "long" >| < NATIVE : "native" >| < NEW : "new" >| < NULL : "null" >| < PACKAGE : "package" >| < PRIVATE : "private" >| < PROTECTED : "protected" >| < PUBLIC : "public" >| < RETURN : "return" >| < SHORT : "short" >| < STATIC : "static" >| < STRICTFP : "strictfp" >| < SUPER : "super" >| < SWITCH : "switch" >| < SYNCHRONIZED : "synchronized" >| < THIS : "this" >| < THROW : "throw" >| < THROWS : "throws" >| < TRANSIENT : "transient" >| < TRUE : "true" >| < TRY : "try" >| < VOID : "void" >| < VOLATILE : "volatile" >| < WHILE : "while" >}/* JAVA LITERALS */< DEFAULT >TOKEN :{  < INTEGER_LITERAL :    < DECIMAL_LITERAL > ([ "l", "L" ])?  | < HEX_LITERAL > ([ "l", "L" ])?  | < OCTAL_LITERAL > ([ "l", "L" ])? >| < #DECIMAL_LITERAL : [ "1"-"9" ] ([ "0"-"9" ])* >| < #HEX_LITERAL : "0" [ "x", "X" ] ([ "0"-"9", "a"-"f", "A"-"F" ])+ >| < #OCTAL_LITERAL : "0" ([ "0"-"7" ])* >| < FLOATING_POINT_LITERAL :    < DECIMAL_FLOATING_POINT_LITERAL >  | < HEXADECIMAL_FLOATING_POINT_LITERAL >>| < #DECIMAL_FLOATING_POINT_LITERAL :    ([ "0"-"9" ])+ "." ([ "0"-"9" ])* (< DECIMAL_EXPONENT >)? ([ "f", "F", "d", "D" ])?  | "." ([ "0"-"9" ])+ (< DECIMAL_EXPONENT >)? ([ "f", "F", "d", "D" ])?  | ([ "0"-"9" ])+ < DECIMAL_EXPONENT > ([ "f", "F", "d", "D" ])?  | ([ "0"-"9" ])+ (< DECIMAL_EXPONENT >)? [ "f", "F", "d", "D" ] >| < #DECIMAL_EXPONENT : [ "e", "E" ] ([ "+", "-" ])? ([ "0"-"9" ])+ >| < #HEXADECIMAL_FLOATING_POINT_LITERAL :    "0" [ "x", "X" ] ([ "0"-"9", "a"-"f", "A"-"F" ])+ (".")? < HEXADECIMAL_EXPONENT > ([ "f", "F", "d", "D" ])?  | "0" [ "x", "X" ] ([ "0"-"9", "a"-"f", "A"-"F" ])* "." ([ "0"-"9", "a"-"f", "A"-"F" ])+ < HEXADECIMAL_EXPONENT > ([ "f", "F", "d", "D" ])? >| < #HEXADECIMAL_EXPONENT : [ "p", "P" ] ([ "+", "-" ])? ([ "0"-"9" ])+ >| < CHARACTER_LITERAL :    "\'"    (      ~[ "\'", "\\", "\n", "\r" ]    | "\\"      (        [ "n", "t", "b", "r", "f", "\\", "\'", "\"" ]      | [ "0"-"7" ] ([ "0"-"7" ])?      | [ "0"-"3" ] [ "0"-"7" ] [ "0"-"7" ]      )    )    "\'" >| < STRING_LITERAL :    "\""    (      ~[ "\"", "\\", "\n", "\r" ]    | "\\"      (        [ "n", "t", "b", "r", "f", "\\", "\'", "\"" ]      | [ "0"-"7" ] ([ "0"-"7" ])?      | [ "0"-"3" ] [ "0"-"7" ] [ "0"-"7" ]      )    )*    "\"" >}/* SEPARATORS */< DEFAULT >TOKEN :{  < LPAREN : "(" >| < RPAREN : ")" >| < LBRACE : "{" >| < RBRACE : "}" >| < LBRACKET : "[" >| < RBRACKET : "]" >| < SEMICOLON : ";" >| < COMMA : "," >| < DOT : "." >}/* OPERATORS */< DEFAULT >TOKEN :{  < ASSIGN : "=" >| < LT : "<" >| < GT : ">" >| < BANG : "!" >| < TILDE : "~" >| < HOOK : "?" >| < COLON : ":" >| < EQ : "==" >| < LE : "<=" >| < GE : ">=" >| < NE : "!=" >| < SC_OR : "||" >| < SC_AND : "&&" >| < INCR : "++" >| < DECR : "--" >| < PLUS : "+" >| < MINUS : "-" >| < STAR : "*" >| < SLASH : "/" >| < BIT_AND : "&" >| < BIT_OR : "|" >| < XOR : "^" >| < REM : "%" >| < PLUSASSIGN : "+=" >| < MINUSASSIGN : "-=" >| < STARASSIGN : "*=" >| < SLASHASSIGN : "/=" >| < ANDASSIGN : "&=" >| < ORASSIGN : "|=" >| < XORASSIGN : "^=" >| < REMASSIGN : "%=" >| < SHIFT_LEFT : "<<" >| < SHIFT_RIGHT : " >>" >}/* keywords */TOKEN :{  < ASSIGNMENT : "#assign" >| < CREATE : "#create" >| < TYPE : "#type" >| < VARIABLE : "#variable" >| < VALUE : "#value" >| < FUNCTION : "#function" >| < WITH : "#with" >| < CONDITION : "#condition" >| < EXPRESSIONS : "#expression" >| < IF_BRANCH_START : "#if_branch_start" >| < IF_BRANCH_END : "#if_branch_end" >| < ELSE_BRANCH_START : "#else_branch_start" >| < ELSE_BRANCH_END : "#else_branch_end" >| < PRE : "#pre" >| < POST : "#post" >| < TERMINATOR : ";;" >| < PARAMETER : "#parameter" >| < STRUCT : "#struct" >| < ARRAY : "#array" >| < ACCESS : "#access" >| < ACCESS_END : "#access_end" >| < LABEL : "#label" >| < INDEX : "#indexes" >| < INCLUDE : "#include" >| < FOR_START : "#for_start" >| < FOR_END : "#for_end" >| < WHILE_START : "#while_start" >| < WHILE_END : "#while_end" >| < SWITCH_START : "#switch_start" >| < SWITCH_END : "#switch_end" >| < CASE_START : "#case_start" >| < CASE_END : "#case_end" >| < FUNCTION_DEC : "#function_declare" >| < FUNCTION_START : "#function_start" >| < FUNCTION_END : "#function_end" >| < STRUCT_DEC : "#struct_declare" >| < STRUCT_START : "#struct_start" >| < STRUCT_END : "#struct_end" >| < PROGRAM_END : "#program_end" >| < PROGRAM_C : "#c_program" >}TOKEN :{  < C_TYPES_MODIFIERS_SIGNED : "signed" >| < C_TYPES_MODIFIERS_UNSIGNED : "unsigned" >}/* IDENTIFIERS */TOKEN :{  < IDENTIFIER : < LETTER > (< PART_LETTER >)* >| < #LETTER : [ "$", "A"-"Z", "_", "a"-"z" ] >| < #PART_LETTER : [ "$", "0"-"9", "A"-"Z", "_", "a"-"z" ] >}String variable() :{  Token var;}{  < VARIABLE > var = < IDENTIFIER >  {    return var.image;  }}String infixOperators() :{  Token n;}{  n = < PLUS >  {    return n.image;  }| n = < MINUS >  {    return n.image;  }| n = < STAR >  {    return n.image;  }| n = < SLASH >  {    return n.image;  }| n = < LT >  {    return n.image;  }| n = < GT >  {    return n.image;  }| n = < EQ >  {    return n.image;  }| n = < LE >  {    return n.image;  }| n = < GE >  {    return n.image;  }| n = < NE >  {    return n.image;  }| n = < SC_OR >  {    return n.image;  }| n = < SC_AND >  {    return n.image;  }| n = < BIT_AND >  {    return n.image;  }| n = < BIT_OR >  {    return n.image;  }| n = < XOR >  {    return n.image;  }| n = < REM >  {    return n.image;  }| n = < SHIFT_LEFT >  {    return n.image;  }| n = < SHIFT_RIGHT >  {    return n.image;  }}String compoundOperators() :{  Token n;}{  n = < PLUSASSIGN >  {    return n.image;  }| n = < MINUSASSIGN >  {    return n.image;  }| n = < STARASSIGN >  {    return n.image;  }| n = < SLASHASSIGN >  {    return n.image;  }| n = < REMASSIGN >  {    return n.image;  }| n = < ORASSIGN >  {    return n.image;  }| n = < ANDASSIGN >  {    return n.image;  }| n = < XORASSIGN >  {    return n.image;  }}String prefixOperators() :{  Token n;}{  n = < INCR >  {    return n.image;  }| n = < DECR >  {    return n.image;  }| n = < BANG >  {    return n.image;  }| n = < TILDE >  {    return n.image;  }| n = < BIT_AND >  {    return n.image;  }}String postfixOperators() :{  Token n;}{  n = < INCR >  {    return n.image;  }| n = < DECR >  {    return n.image;  }}String catchModifier() :{  Token n;}{  n = < ABSTRACT >  {    return n.image;  }| n = < PRIVATE >  {    return n.image;  }| n = < PROTECTED >  {    return n.image;  }| n = < PUBLIC >  {    return n.image;  }| n = < STATIC >  {    return n.image;  }| n = < FINAL >  {    return n.image;  }| n = < SYNCHRONIZED >  {    return n.image;  }| n = < VOLATILE >  {    return n.image;  }| n = < CONST >  {    return n.image;  }}ASTExpressionUnitLiteral value() :{  Token n;  Token sign;  ASTExpressionUnitLiteral valueNode;}{  n = < INTEGER_LITERAL >  {    valueNode = new ASTExpressionUnitLiteral(n.image);    //System.out.println(valueNode.print());
+    return valueNode;  }| n = < FLOATING_POINT_LITERAL >  {    valueNode = new ASTExpressionUnitLiteral(n.image);    //System.out.println(valueNode.print());
+    return valueNode;  }| n = < CHARACTER_LITERAL >  {    valueNode = new ASTExpressionUnitLiteral(n.image);    //System.out.println(valueNode.print());
+    return valueNode;  }| n = < STRING_LITERAL >  {    valueNode = new ASTExpressionUnitLiteral(n.image);    return valueNode;  }| n = < TRUE >  {    valueNode = new ASTExpressionUnitLiteral(n.image);    return valueNode;  }| n = < FALSE >  {    valueNode = new ASTExpressionUnitLiteral(n.image);    return valueNode;  }}String primitive_typesJ() :{  Token n;}{  (    n = < BYTE >    {      return n.image;    }  | n = < INT >    {      return n.image;    }  | n = < CHAR >    {      return n.image;    }  | n = < DOUBLE >    {      return n.image;    }  | n = < FLOAT >    {      return n.image;    }  | n = < BOOLEAN >    {      return n.image;    }  )}String primitive_typesC() :{  Token n;  Token second;  Token third;}{  (    n = < INT >    {      return n.image;    }  | n = < CHAR >    {      return n.image;    }  | n = < LONG >    {      return n.image;    }  | n = < SHORT >    {      return n.image;    }  | n = < DOUBLE >    {      return n.image;    }  | n = < FLOAT >    {      return n.image;    }  | n = < C_TYPES_MODIFIERS_SIGNED >    {      return n.image;    }  )}String types_C() :{  String token;  String result = "";  Token n;}{  n = < IDENTIFIER >  {    return n.image;  }|  (    token = primitive_typesC()    {      result += token + " ";    }  )+  {    return result;  }}String typesJ() :{  String type;  Token n;}{  n = < IDENTIFIER >  {    return n.image;  }| type = primitive_typesJ()  {    return type;  }}ASTDeclarationStatementC create_variableC() :{  String type_token;  String id;  ASTDeclarationStatementC result;  ASTExpressionUnitIdentifier var;  ASTExpression exp = new ASTExpression();  String temp;  ArrayList < String > modifiers = new ArrayList < String > ();}{  < CREATE >  (    temp = catchModifier()    {      modifiers.add(temp);    }  )*  type_token = types_C()  {    result = new ASTDeclarationStatementC(type_token);    for (String s : modifiers)    {      result.addModifier(s);    }  }  (    id = variable()    (      exp = expressionC()    )?    {      if (exp == null)      {        result.addVariableWithoutDeclaration(new ASTExpressionUnitIdentifier(id));      }      else      {        result.addVariableWithDeclaration(new ASTExpressionUnitIdentifier(id), exp);      }    }  )+  < TERMINATOR >  {    return result;  }}ASTExpression fragmentC() :{  Token var = new Token();  String id;  Token check = new Token();  ASTExpressionUnitLiteral v = new ASTExpressionUnitLiteral();  ASTExpression parameters = new ASTExpression();  ASTExpression result = new ASTExpression();}{  (    < VALUE > v = value()  )  {    //System.out.println(v.toSyntax());    return v;  }| id = variable()  {    return new ASTExpressionUnitIdentifier(id);  }|  (    < FUNCTION > var = < IDENTIFIER >    {      ASTExpressionUnitFunctionCall call = new ASTExpressionUnitFunctionCall(var.image);      //System.out.println(var.image);    }    < LPAREN >    (      < PARAMETER > parameters = expressionC()      {
+        call.addParameter(parameters);      }    )*    < RPAREN >  )  {        return call;  }|  (    check = < LPAREN > result = expressionC() < RPAREN >  )  {    result.quote();    return result;  }| < LBRACE >  {    ASTExpressionUnitLiteralArray arr = new ASTExpressionUnitLiteralArray();  }  (    < PARAMETER > parameters = expressionC()  )*  {    arr.addValue(parameters);    return arr;  }  < RBRACE >| < ARRAY > var = < IDENTIFIER >  {    ASTExpressionUnitIdentifierArrayObject array = new ASTExpressionUnitIdentifierArrayObject(var.image);  }  (    < INDEX > parameters = expressionC()  )+  {    array.addIndex(parameters);    return array;  }| < ACCESS > (var = < IDENTIFIER >)  {    ArrayList < String > ids = new ArrayList < String > ();    ids.add(var.image);  }  (var = < IDENTIFIER >)+  {    ids.add(var.image);  }  < ACCESS_END >  {    return ASTExpressionUnitAccess.generateNestedAccess(ids);  }}ASTExpression termC() :{  ArrayList < String > operators = new ArrayList < String > ();  ArrayList < ASTExpression > operands = new ArrayList < ASTExpression > ();  String operator = null;  ASTExpression operand1;  ASTExpression operand2 = new ASTExpression();  ASTExpression result;}{  operand1 = fragmentC()  (    operator = infixOperators()    {      operators.add(operator);    }    operand2 = fragmentC()    {      operands.add(operand2);    }  )*  {    if (operator == null || operators.isEmpty())    {      result = operand1;      return result;    }    result = new ASTExpression();    while (!operators.isEmpty())    {      result = new ASTExpressionInfixOperation(operators.remove(0), operand1, operands.remove(0));      operand1 = result;    }    return result;  }}ASTExpression infix_expressionC() :{  ASTExpression result;}{  result = termC()  {    return result;  }}ASTExpression prefix_expressionC() :{  String operator;  Token op;  ASTExpressionUnitLiteral v;  ASTExpressionPrefixOperation result;  ASTExpression exp;}{  (    operator = prefixOperators() exp = fragmentC()  )  {    result = new ASTExpressionPrefixOperation(operator, exp);    return result;  }| op = < MINUS > exp = expressionC()  {    result = new ASTExpressionPrefixOperation(op.image, exp);  }}ASTExpression postfix_expressionC() :{  String operator;  Token var;}{  < POST > < VARIABLE > var = < IDENTIFIER > operator = postfixOperators()  {    ASTExpressionUnitIdentifier i = new ASTExpressionUnitIdentifier(var.image);    ASTExpressionPostfixOperation result = new ASTExpressionPostfixOperation(operator, i);    return result;  }}ASTExpression expressionC() :{  ASTExpression result1;  ASTExpression result2;  ASTExpression result3;  ASTExpression result4;}{  (    result1 = prefix_expressionC()    {      return result1;    }  | result2 = infix_expressionC()    {      return result2;    }  | result3 = postfix_expressionC()    {      return result3;    }  )| result4 = assignmentC()  {    return result4;  }}ASTExpression assignmentC() :{  ASTExpression term;  Token operator;  ASTExpression exp;  String op;}{  < ASSIGNMENT > term = fragmentC()  {}  (    token = < WITH >    {      op = " = ";    }  | op = compoundOperators()  )  exp = expressionC()  {    ASTExpressionAssignment result = new ASTExpressionAssignment(term, exp, op);    return result;  }}/*Block Statement*/ASTStructDeclaration structDeclareStatement() :{  Token name;  ASTDeclarationStatementC attribute;}{  < STRUCT_DEC > name = < IDENTIFIER >  {    ASTStructDeclaration result = new ASTStructDeclaration(name.image);  }  < STRUCT_START >  (    attribute = create_variableC()    {      result.addAttribute(attribute);    }  )+  < STRUCT_END > < TERMINATOR >  {    return result;  }}ASTFunction functionStatementC() :{  String modifier;  String returnType;  Token name;  String parameterType;  Token parameterName;  ASTStatement s;}{  < FUNCTION_DEC > name = < IDENTIFIER >  {    ASTFunctionC result = new ASTFunctionC(name.image);  }  (    modifier = catchModifier()    {      result.addModifier(modifier);    }  )*  (    returnType = types_C()    {      result.addReturnType(new ASTExpressionUnitTypes(returnType));    }  )?  (    < PARAMETER > parameterType = types_C() parameterName = < IDENTIFIER >    {      ASTExpressionUnitTypes t = new ASTExpressionUnitTypes(parameterType);      ASTExpressionUnitIdentifier i = new ASTExpressionUnitIdentifier(parameterName.image);      result.addParameter(t, i);    }  )*  < FUNCTION_START >  (    s = statementC()    {      result.addStatement(s);    }  )*  < FUNCTION_END > < TERMINATOR >  {    return result;  }}ASTIfStatementC if_statementC() :{  ASTExpression condition;  ASTStatement stat1;  ASTStatement stat2;}{  < IF > < CONDITION > condition = expressionC()  {    ASTIfStatementC result = new ASTIfStatementC(condition);  }  < IF_BRANCH_START >  (    stat1 = statementC()    {      result.setIf(stat1);    }  )*  < IF_BRANCH_END >  (    < ELSE_BRANCH_START >    (      stat2 = statementC()      {        result.setElse(stat2);      }    )*    < ELSE_BRANCH_END >  )?  < TERMINATOR >  {
+    return result;  }}ASTForStatementC forStatementC() :{  ASTExpression init;  ASTExpression end;  ASTExpression increment;  ASTStatement temp;}{  < FOR >  {    ASTForStatementC result = new ASTForStatementC();  }  < CONDITION >  (    init = expressionC()    {      result.addInitial(init);    }  )?  < CONDITION >  (    end = expressionC()    {      result.addFinal(end);    }  )?  < CONDITION >  (    increment = expressionC()    {      result.addIncrement(increment);    }  )?  < FOR_START >  (    temp = statementC()    {      result.addStatement(temp);    }  )*  < FOR_END > < TERMINATOR >  {    return result;  }}ASTWhileStatementC whileStatementC() :{  ASTExpression exp;  ASTStatement temp;}{  < WHILE > < CONDITION > exp = expressionC()  {    ASTWhileStatementC result = new ASTWhileStatementC(exp);  }  < WHILE_START >  (    temp = statementC()    {      result.addStatement(temp);    }  )*  < WHILE_END > < TERMINATOR >  {    return result;  }}ASTDoWhileStatement doWhileStatement() :{  ASTExpression exp;  ASTStatement temp;}{  < DO > < CONDITION > exp = expressionC()  {    ASTDoWhileStatement result = new ASTDoWhileStatement(exp);  }  < WHILE_START >  (    temp = statementC()    {      result.addStatement(temp);    }  )*  < WHILE_END > < TERMINATOR >  {    return result;  }}ASTSwitchStatement switchStatement() :{  ASTExpression condition;  ASTExpression case_condition;  ASTStatement temp;}{  < SWITCH > < CONDITION > condition = expressionC()  {    ASTSwitchStatement result = new ASTSwitchStatement(condition);  }  (    < CASE > case_condition = expressionC()    {      result.addCase(case_condition);    }    < CASE_START >    (      temp = statementC()      {        result.addStatement(temp);      }    )*    < CASE_END >  )*  (    < _DEFAULT >    {      result.addDefault();    }    < CASE_START >    (      temp = statementC()      {        result.addStatement(temp);      }    )*    < CASE_END >  )?  < TERMINATOR >  {    return result;  }}/*SimpleStatement*/ASTBreakStatementC breakStatementC() :{  Token n;}{  < BREAK > n = < IDENTIFIER > < TERMINATOR >  {    ASTExpressionUnitIdentifier label = new ASTExpressionUnitIdentifier(n.image);    ASTBreakStatementC result = new ASTBreakStatementC(label);    return result;  }}ASTContinueStatementC continueStatement() :{  Token n;}{  < CONTINUE > n = < IDENTIFIER > < TERMINATOR >  {    ASTExpressionUnitIdentifier label = new ASTExpressionUnitIdentifier(n.image);    ASTContinueStatementC result = new ASTContinueStatementC(label);    return result;  }}ASTReturnStatementC returnStatementC() :{  ASTExpression exp = null;}{  < RETURN >  (    exp = expressionC()  )?  < TERMINATOR >  {    ASTReturnStatementC result = new ASTReturnStatementC();    if (exp != null)    {      result.addExp(exp);    }    return result;  }}ASTLabelStatement labelStatement() :{  Token n;}{  < LABEL > n = < IDENTIFIER > < TERMINATOR >  {    ASTExpressionUnitIdentifier id = new ASTExpressionUnitIdentifier(n.image);    ASTLabelStatement result = new ASTLabelStatement(id);    return result;  }}ASTImportStatementC importStatementC() :{  ASTExpression exp;}{  < INCLUDE > exp = expressionC() < TERMINATOR >  {    ASTImportStatementC result = new ASTImportStatementC(exp);    return result;  }}ASTSimpleStatement simpleStatementC() :{  ASTExpression result;  ASTDeclarationStatementC out;  ASTBreakStatementC bs;  ASTContinueStatementC cs;  ASTLabelStatement label;  ASTReturnStatement rs;  ASTImportStatementC is;}{  (    result = expressionC() < TERMINATOR >  )  {    ASTExpressionStatementC output = new ASTExpressionStatementC(result);    return output;  }| out = create_variableC()  {    return out;  }| bs = breakStatementC()  {    return bs;  }| cs = continueStatement()  {    return cs;  }| label = labelStatement()  {    return label;  }| rs = returnStatementC()  {    return rs;  }| is = importStatementC()  {    return is;  }}ASTBlockStatement blockStatementC() :{  ASTStructDeclaration structDeclare;  ASTDoWhileStatement doWhile;  ASTForStatement forStatement;  ASTFunction functionDeclare;  ASTIfStatement ifStatement;  ASTWhileStatement whileStatement;  ASTSwitchStatement switchStatement;}{  structDeclare = structDeclareStatement()  {    return structDeclare;  }| doWhile = doWhileStatement()  {    return doWhile;  }| forStatement = forStatementC()  {    return forStatement;  }| functionDeclare = functionStatementC()  {    return functionDeclare;  }| ifStatement = if_statementC()  {    return ifStatement;  }| whileStatement = whileStatementC()  {    return whileStatement;  }| switchStatement = switchStatement()  {    return switchStatement;  }}ASTStatement statementC() :{  ASTStatement result;}{  result = simpleStatementC()  {    return result;  }| result = blockStatementC()  {    return result;  }}ASTCompilationUnitC programC() :{  Token name;  ASTStatement statement;}{  < PROGRAM_C > name = < IDENTIFIER >  {    ASTCompilationUnitC result = new ASTCompilationUnitC(name.image);  }  (    statement = statementC()    {      result.addStatement(statement);    }  )+  < PROGRAM_END >  {    return result;  }}ASTCompilationUnit program() :{  ASTCompilationUnit result;}{  result = programC()  {    System.out.println(result.toSyntax());    return result;  }}

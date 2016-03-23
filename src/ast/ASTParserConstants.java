@@ -183,179 +183,157 @@ public interface ASTParserConstants {
   /** RegularExpression Id. */
   int LT = 93;
   /** RegularExpression Id. */
-  int BANG = 94;
+  int GT = 94;
   /** RegularExpression Id. */
-  int TILDE = 95;
+  int BANG = 95;
   /** RegularExpression Id. */
-  int HOOK = 96;
+  int TILDE = 96;
   /** RegularExpression Id. */
-  int COLON = 97;
+  int HOOK = 97;
   /** RegularExpression Id. */
-  int EQ = 98;
+  int COLON = 98;
   /** RegularExpression Id. */
-  int LE = 99;
+  int EQ = 99;
   /** RegularExpression Id. */
-  int GE = 100;
+  int LE = 100;
   /** RegularExpression Id. */
-  int NE = 101;
+  int GE = 101;
   /** RegularExpression Id. */
-  int SC_OR = 102;
+  int NE = 102;
   /** RegularExpression Id. */
-  int SC_AND = 103;
+  int SC_OR = 103;
   /** RegularExpression Id. */
-  int INCR = 104;
+  int SC_AND = 104;
   /** RegularExpression Id. */
-  int DECR = 105;
+  int INCR = 105;
   /** RegularExpression Id. */
-  int PLUS = 106;
+  int DECR = 106;
   /** RegularExpression Id. */
-  int MINUS = 107;
+  int PLUS = 107;
   /** RegularExpression Id. */
-  int STAR = 108;
+  int MINUS = 108;
   /** RegularExpression Id. */
-  int SLASH = 109;
+  int STAR = 109;
   /** RegularExpression Id. */
-  int BIT_AND = 110;
+  int SLASH = 110;
   /** RegularExpression Id. */
-  int BIT_OR = 111;
+  int BIT_AND = 111;
   /** RegularExpression Id. */
-  int XOR = 112;
+  int BIT_OR = 112;
   /** RegularExpression Id. */
-  int REM = 113;
+  int XOR = 113;
   /** RegularExpression Id. */
-  int PLUSASSIGN = 114;
+  int REM = 114;
   /** RegularExpression Id. */
-  int MINUSASSIGN = 115;
+  int PLUSASSIGN = 115;
   /** RegularExpression Id. */
-  int STARASSIGN = 116;
+  int MINUSASSIGN = 116;
   /** RegularExpression Id. */
-  int SLASHASSIGN = 117;
+  int STARASSIGN = 117;
   /** RegularExpression Id. */
-  int ANDASSIGN = 118;
+  int SLASHASSIGN = 118;
   /** RegularExpression Id. */
-  int ORASSIGN = 119;
+  int ANDASSIGN = 119;
   /** RegularExpression Id. */
-  int XORASSIGN = 120;
+  int ORASSIGN = 120;
   /** RegularExpression Id. */
-  int REMASSIGN = 121;
+  int XORASSIGN = 121;
   /** RegularExpression Id. */
-  int INFIX_OPERATOR = 122;
+  int REMASSIGN = 122;
   /** RegularExpression Id. */
-  int TEXT_ADD = 123;
+  int SHIFT_LEFT = 123;
   /** RegularExpression Id. */
-  int TEXT_MINUS = 124;
+  int SHIFT_RIGHT = 124;
   /** RegularExpression Id. */
-  int TEXT_MULTIPLY = 125;
+  int ASSIGNMENT = 125;
   /** RegularExpression Id. */
-  int TEXT_DIVISION = 126;
+  int CREATE = 126;
   /** RegularExpression Id. */
-  int TEXT_LESS_THAN = 127;
+  int TYPE = 127;
   /** RegularExpression Id. */
-  int TEXT_GREATER_THAN = 128;
+  int VARIABLE = 128;
   /** RegularExpression Id. */
-  int TEXT_EQUAL = 129;
+  int VALUE = 129;
   /** RegularExpression Id. */
-  int TEXT_LESS_EQUAL = 130;
+  int FUNCTION = 130;
   /** RegularExpression Id. */
-  int TEXT_GREATER_EQUAL = 131;
+  int WITH = 131;
   /** RegularExpression Id. */
-  int TEXT_NOT_EQUAL = 132;
+  int CONDITION = 132;
   /** RegularExpression Id. */
-  int TEXT_OR = 133;
+  int EXPRESSIONS = 133;
   /** RegularExpression Id. */
-  int TEXT_AND = 134;
+  int IF_BRANCH_START = 134;
   /** RegularExpression Id. */
-  int TEXT_BIT_AND = 135;
+  int IF_BRANCH_END = 135;
   /** RegularExpression Id. */
-  int TEXT_BIT_OR = 136;
+  int ELSE_BRANCH_START = 136;
   /** RegularExpression Id. */
-  int TEXT_XOR = 137;
+  int ELSE_BRANCH_END = 137;
   /** RegularExpression Id. */
-  int TEXT_MOD = 138;
+  int PRE = 138;
   /** RegularExpression Id. */
-  int TEXT_SHIFT_LEFT = 139;
+  int POST = 139;
   /** RegularExpression Id. */
-  int TEXT_SHIFT_RIGHT = 140;
+  int TERMINATOR = 140;
   /** RegularExpression Id. */
-  int TEXT_SHIFT_RIGHT_ZERO = 141;
+  int PARAMETER = 141;
   /** RegularExpression Id. */
-  int COMPOUND_OPERATOR = 142;
+  int STRUCT = 142;
   /** RegularExpression Id. */
-  int TEXT_PLUS_EQUAL = 143;
+  int ARRAY = 143;
   /** RegularExpression Id. */
-  int TEXT_MINUS_EQUAL = 144;
+  int ACCESS = 144;
   /** RegularExpression Id. */
-  int TEXT_TIMES_EQUAL = 145;
+  int ACCESS_END = 145;
   /** RegularExpression Id. */
-  int TEXT_DIVIDE_EQUAL = 146;
+  int LABEL = 146;
   /** RegularExpression Id. */
-  int TEXT_MOD_EQUAL = 147;
+  int INDEX = 147;
   /** RegularExpression Id. */
-  int TEXT_AND_EQUAL = 148;
+  int INCLUDE = 148;
   /** RegularExpression Id. */
-  int TEXT_OR_EQUAL = 149;
+  int FOR_START = 149;
   /** RegularExpression Id. */
-  int TEXT_XOR_EQUAL = 150;
+  int FOR_END = 150;
   /** RegularExpression Id. */
-  int PREFIX_OPERATOR = 151;
+  int WHILE_START = 151;
   /** RegularExpression Id. */
-  int TEXT_PRE_INC = 152;
+  int WHILE_END = 152;
   /** RegularExpression Id. */
-  int TEXT_PRE_DEC = 153;
+  int SWITCH_START = 153;
   /** RegularExpression Id. */
-  int TEXT_NOT = 154;
+  int SWITCH_END = 154;
   /** RegularExpression Id. */
-  int TEXT_BIT_NOT = 155;
+  int CASE_START = 155;
   /** RegularExpression Id. */
-  int POSTFIX_OPERATOR = 156;
+  int CASE_END = 156;
   /** RegularExpression Id. */
-  int TEXT_POST_INC = 157;
+  int FUNCTION_DEC = 157;
   /** RegularExpression Id. */
-  int TEXT_POST_DEC = 158;
+  int FUNCTION_START = 158;
   /** RegularExpression Id. */
-  int CONDITIONAL_OPERATOR = 159;
+  int FUNCTION_END = 159;
   /** RegularExpression Id. */
-  int TEXT_IF_YES = 160;
+  int STRUCT_DEC = 160;
   /** RegularExpression Id. */
-  int TEXT_IF_NOT = 161;
+  int STRUCT_START = 161;
   /** RegularExpression Id. */
-  int ASSIGNMENT = 162;
+  int STRUCT_END = 162;
   /** RegularExpression Id. */
-  int CREATE = 163;
+  int PROGRAM_END = 163;
   /** RegularExpression Id. */
-  int TYPE = 164;
+  int PROGRAM_C = 164;
   /** RegularExpression Id. */
-  int VARIABLE = 165;
+  int C_TYPES_MODIFIERS_SIGNED = 165;
   /** RegularExpression Id. */
-  int VALUE = 166;
+  int C_TYPES_MODIFIERS_UNSIGNED = 166;
   /** RegularExpression Id. */
-  int FUNCTION = 167;
+  int IDENTIFIER = 167;
   /** RegularExpression Id. */
-  int WITH = 168;
+  int LETTER = 168;
   /** RegularExpression Id. */
-  int CONDITION = 169;
-  /** RegularExpression Id. */
-  int EXPRESSIONS = 170;
-  /** RegularExpression Id. */
-  int IF_BRANCH_START = 171;
-  /** RegularExpression Id. */
-  int IF_BRANCH_END = 172;
-  /** RegularExpression Id. */
-  int ELSE_BRANCH_START = 173;
-  /** RegularExpression Id. */
-  int ELSE_BRANCH_END = 174;
-  /** RegularExpression Id. */
-  int PRE = 175;
-  /** RegularExpression Id. */
-  int POST = 176;
-  /** RegularExpression Id. */
-  int TERMINATOR = 177;
-  /** RegularExpression Id. */
-  int IDENTIFIER = 178;
-  /** RegularExpression Id. */
-  int LETTER = 179;
-  /** RegularExpression Id. */
-  int PART_LETTER = 180;
+  int PART_LETTER = 169;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -458,6 +436,7 @@ public interface ASTParserConstants {
     "\".\"",
     "\"=\"",
     "\"<\"",
+    "\">\"",
     "\"!\"",
     "\"~\"",
     "\"?\"",
@@ -486,46 +465,8 @@ public interface ASTParserConstants {
     "\"|=\"",
     "\"^=\"",
     "\"%=\"",
-    "<INFIX_OPERATOR>",
-    "\"#plus\"",
-    "\"#minus\"",
-    "\"#multiply\"",
-    "\"#divide\"",
-    "\"#less_than\"",
-    "\"#greater_than\"",
-    "\"#equal\"",
-    "\"#less_equal\"",
-    "\"#greater_equal\"",
-    "\"#not_equal\"",
-    "\"#or\"",
-    "\"#and\"",
-    "\"#bit_and\"",
-    "\"#bit_or\"",
-    "\"#bit_xor\"",
-    "\"#mod\"",
-    "\"#shift_left\"",
-    "\"#shift_right\"",
-    "\"#shift_right_zero\"",
-    "<COMPOUND_OPERATOR>",
-    "\"#plus_equal\"",
-    "\"#minus_equal\"",
-    "\"#multiply_equal\"",
-    "\"#divide_equal\"",
-    "\"#mod_equal\"",
-    "\"#and_equal\"",
-    "\"#or_equal\"",
-    "\"#xor_equal\"",
-    "<PREFIX_OPERATOR>",
-    "\"#pre_inc\"",
-    "\"#pre_dec\"",
-    "\"#not\"",
-    "\"#bit_not\"",
-    "<POSTFIX_OPERATOR>",
-    "\"#post_inc\"",
-    "\"#post_dec\"",
-    "<CONDITIONAL_OPERATOR>",
-    "\"#if_yes\"",
-    "\"#if_not\"",
+    "\"<<\"",
+    "\" >>\"",
     "\"#assign\"",
     "\"#create\"",
     "\"#type\"",
@@ -542,6 +483,32 @@ public interface ASTParserConstants {
     "\"#pre\"",
     "\"#post\"",
     "\";;\"",
+    "\"#parameter\"",
+    "\"#struct\"",
+    "\"#array\"",
+    "\"#access\"",
+    "\"#access_end\"",
+    "\"#label\"",
+    "\"#indexes\"",
+    "\"#include\"",
+    "\"#for_start\"",
+    "\"#for_end\"",
+    "\"#while_start\"",
+    "\"#while_end\"",
+    "\"#switch_start\"",
+    "\"#switch_end\"",
+    "\"#case_start\"",
+    "\"#case_end\"",
+    "\"#function_declare\"",
+    "\"#function_start\"",
+    "\"#function_end\"",
+    "\"#struct_declare\"",
+    "\"#struct_start\"",
+    "\"#struct_end\"",
+    "\"#program_end\"",
+    "\"#c_program\"",
+    "\"signed\"",
+    "\"unsigned\"",
     "<IDENTIFIER>",
     "<LETTER>",
     "<PART_LETTER>",

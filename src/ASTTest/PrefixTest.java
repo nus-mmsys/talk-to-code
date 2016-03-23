@@ -34,7 +34,7 @@ public class PrefixTest extends TestCase {
 			int testNo = 0;
 			while(testNo!=count){
 				try {
-					assertEquals(testNo+" "+expectedOutput.get(testNo),testNo+" "+parser.statement().print());
+					assertEquals(testNo+" "+expectedOutput.get(testNo),testNo+" "+parser.statement().toSyntax());
 					testNo++;
 				} catch (Exception ex){
 					ex.printStackTrace();

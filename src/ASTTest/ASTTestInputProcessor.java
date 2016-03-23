@@ -36,7 +36,7 @@ public class ASTTestInputProcessor {
 				int i = 0;
 				while(i<10000){
 					ASTNode temp = parser.statement();
-					result.add(temp.print()+"\n");
+					result.add(temp.toSyntax()+"\n");
 					i++;
 				}
 				System.out.println(result.size());
