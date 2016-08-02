@@ -1,5 +1,7 @@
+I want to create a function
 create a function
-create a function called fibonacci
-create a function with int n
-create a function called fibonacci that returns an int
-create function called fibonacci that returns an int
+set x to a plus b
+i plus plus
+set i to i plus plus
+set a to a plus b minus c plus d
+set a to result of b plus c times a

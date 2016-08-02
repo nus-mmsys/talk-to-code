@@ -2,49 +2,42 @@ package ast;
 
 import java.util.ArrayList;
 
-public class ASTNode {
-	ASTNode parent;
-	ArrayList<ASTNode> children;
-	ASTNode nextSibling;
-	int activeChild;
-	
+public class ASTNode{
+	private static final String type = "ASTNode";
+	protected int usability;
+	protected static final int INDEX_C = 0;
+	protected static final int INDEX_JAVA = 1;
+	protected static final int INDEX_PYTHON = 2;
+	protected static final String LAN_C = "C";
+	protected static final String LAN_JAVA = "JAVA";
+	protected static final String LAN_PYTHON = "PYTHON";
+	protected ASTNode parent;
+	protected String language;
+	protected String result;
 	public ASTNode()
 	{
 		parent = null;
-		children = new ArrayList<ASTNode>();
-		nextSibling = null;
-		activeChild = 0;
+		this.result = "";
+		
 	}
 	
-	public ASTNode(ASTNode p)
-	{
-		parent = p;
-		children = new ArrayList<ASTNode>();
-		nextSibling = null;
-		activeChild =0;
+	protected void addParent(ASTNode p){
+		this.parent = p;
 	}
 	
-	void addChild(ASTNode a)
-	{
-		a.parent = this;
-		children.add(a);
+	protected boolean isApplicable(int programmingLanguageIndex){
+		return (this.usability&(1<<programmingLanguageIndex))==0;
 	}
 	
-	ASTNode getNextChild()
+	
+	//need to change
+	public String toSyntax()
 	{
-		ASTNode a = children.get(0);
-		children.remove(0);
-		return a;
+		return this.result;
+	}
+	public String typeof(){
+		return type;
 	}
 	
-	public String print()
-	{
-		return "Hi, I am an ASTNode";
-	}
-	
-	int getActiveChild()
-	{
-		return activeChild;
-	}
 	
 }
